@@ -1,5 +1,6 @@
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
+from django.views.generic import TemplateView
 from rest_framework.routers import DefaultRouter
 
 from movies.views import MovieViewSet
@@ -15,5 +16,6 @@ router.register(r'watchlists', WatchListViewSet, 'watchlist')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls)),
+    re_path('^.*', TemplateView.as_view(template_name='index.html')),
 ]
