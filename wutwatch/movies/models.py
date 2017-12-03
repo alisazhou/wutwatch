@@ -7,4 +7,4 @@ class Movie(models.Model):
     # TODO: add poster and rotten tomato score
 
     def __str__(self):
-      return name
+        return self.name
