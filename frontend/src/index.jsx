@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import App from './app';
+
 
 ReactDOM.render(
-  <div>TELL ME IT STILL WORKS</div>,
-  document.getElementById('reactApp')
+    <App />,
+    document.getElementById('reactApp')
 );
