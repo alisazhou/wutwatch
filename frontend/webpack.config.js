@@ -18,8 +18,8 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
-          presets: ['env', 'react'],
-          plugins: ['transform-object-rest-spread']
+          presets: ['env', 'react', 'es2015'],
+          plugins: ['transform-object-rest-spread', 'transform-class-properties', 'transform-runtime']
         },
       },
     ],
