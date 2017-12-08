@@ -3,13 +3,14 @@ import { Provider } from 'react-redux';
 
 import store from './state/store';
 import CreateUserForm from './components/CreateUserForm';
+import LoginUserForm from './components/LoginUserForm';
 
 
 class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <CreateUserForm />
+                <LoginUserForm />
             </Provider>
         );
     }
