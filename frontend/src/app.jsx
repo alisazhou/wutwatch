@@ -2,8 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 
 import store from './state/store';
-import CreateUserForm from './components/CreateUserForm';
-import LoginUserForm from './components/LoginUserForm';
+import CreateUserForm from './components/HomePage/CreateUserForm';
+import LoginUserForm from './components/HomePage/LoginUserForm';
 
 
 class App extends React.Component {
