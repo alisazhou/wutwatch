@@ -75,6 +75,7 @@ const loginUserAction = creds => {
             .then(response => response.ok ? response.json() : Promise.reject(response.text()))
             .then(json => {
                 console.log(json);
+                localStorage.setItem('token', json.token);
                 dispatch(loginUserSuccessActionCreator());
             }).catch(err => {
                 console.log(err);
