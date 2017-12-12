@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-import { createWatchlistAction, loadWatchlistsAction } from '../../state/actions/movieActions';
+import { createWatchlistAction, loadWatchlistsAction } from '../../state/actions/watchlistActions';
 
 
 class Watchlists extends React.Component {
@@ -38,7 +38,7 @@ class Watchlists extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    watchlists: state.movies.watchlists,
+    watchlists: state.watchlists.watchlists,
 });
 
 const mapDispatchToProps = dispatch => ({
