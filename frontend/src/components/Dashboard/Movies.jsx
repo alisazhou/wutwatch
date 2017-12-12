@@ -1,9 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { Field, reduxForm, reset } from 'redux-form';
 
-import { createMovieAction, loadMoviesAction } from '../../state/actions/movieActions';
+import { loadMoviesActionCreator } from '../../state/actions/movieActions';
+import AddMovieForm from './AddMovieForm';
 
 
 class Movies extends React.Component {
@@ -11,18 +11,6 @@ class Movies extends React.Component {
         if (_.isEmpty(this.props.movies)) {
             this.props.loadMovies();
         }
-    }
-    get addMovieForm() {
-        if (!this.props.selectedWatchlist) {
-            return null;
-        }
-
-        return (
-            <form onSubmit={this.props.handleSubmit(this.handleCreateMovie)}>
-                name: <Field component="input" type="text" name="name" />
-                <button type="submit">Add Movie to Watchlist</button>
-            </form>
-        );
     }
     get moviesList() {
         // if selected watchlist, show only movies in list; else show all movies
@@ -36,14 +24,10 @@ class Movies extends React.Component {
             </ul>
         );
     }
-    handleCreateMovie = movieInfo => {
-        movieInfo['watchlist'] = this.props.selectedWatchlist;
-        this.props.createMovie(movieInfo);
-    }
     render() {
         return (
             <div>
-                {this.addMovieForm}
+                <AddMovieForm />
                 {this.moviesList}
             </div>
         );
@@ -53,22 +37,14 @@ class Movies extends React.Component {
 const mapStateToProps = state => ({
     movies: state.movies.movies,
     selectedWatchlist: state.watchlists.selectedWatchlist,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
-    createMovie: movieInfo => {
-        dispatch(createMovieAction(movieInfo));
-    },
     loadMovies: () => {
-        dispatch(loadMoviesAction());
+        dispatch(loadMoviesActionCreator());
     },
 });
 
 const ConnectedMovies = connect(mapStateToProps, mapDispatchToProps)(Movies);
 
-const WrappedMovies = reduxForm({
-    form: 'createMovie',
-    onSubmitSuccess: (result, dispatch) => { dispatch(reset('createMovie')); },
-})(ConnectedMovies);
-
-export default WrappedMovies;
+export default ConnectedMovies;

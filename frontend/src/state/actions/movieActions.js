@@ -25,7 +25,7 @@ const createMovieSuccessActionCreator = movie => ({
     movie,
 });
 
-const createMovieAction = info => {
+const createMovieActionCreator = info => {
     const config = {
         method: 'POST',
         headers: HEADERS,
@@ -62,7 +62,7 @@ const loadMoviesSuccessActionCreator = movies => ({
     movies,
 });
 
-const loadMoviesAction = () => {
+const loadMoviesActionCreator = () => {
     const config = {
         method: 'GET',
         headers: HEADERS,
@@ -83,4 +83,4 @@ const loadMoviesAction = () => {
     };
 };
 
-export { createMovieAction, loadMoviesAction };
+export { createMovieActionCreator, loadMoviesActionCreator };
