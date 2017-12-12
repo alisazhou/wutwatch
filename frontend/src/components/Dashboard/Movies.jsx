@@ -54,6 +54,7 @@ const ConnectedMovies = connect(mapStateToProps, mapDispatchToProps)(Movies);
 
 const WrappedMovies = reduxForm({
     form: 'createMovie',
+    onSubmitSuccess: (result, dispatch) => { dispatch(reset('createMovie')); },
 })(ConnectedMovies);
 
 export default WrappedMovies;

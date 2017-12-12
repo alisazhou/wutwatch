@@ -1,6 +1,7 @@
 import {
     CREATE_WATCHLIST_FAILURE, CREATE_WATCHLIST_REQUEST, CREATE_WATCHLIST_SUCCESS,
     LOAD_WATCHLISTS_FAILURE, LOAD_WATCHLISTS_REQUEST, LOAD_WATCHLISTS_SUCCESS,
+    SELECT_WATCHLIST,
 } from './actionTypes';
 
 
@@ -26,7 +27,7 @@ const createWatchlistSuccessActionCreator = watchlist => ({
     watchlist,
 });
 
-const createWatchlistAction = info => {
+const createWatchlistActionCreator = info => {
     const config = {
         method: 'POST',
         headers: HEADERS,
@@ -63,7 +64,7 @@ const loadWatchlistsSuccessActionCreator = watchlists => ({
     watchlists,
 });
 
-const loadWatchlistsAction = () => {
+const loadWatchlistsActionCreator = () => {
     const config = {
         method: 'GET',
         headers: HEADERS,
@@ -84,4 +85,11 @@ const loadWatchlistsAction = () => {
     };
 };
 
-export { createWatchlistAction, loadWatchlistsAction };
+
+const selectWatchlistActionCreator = selectedWatchlist => ({
+    type: SELECT_WATCHLIST,
+    selectedWatchlist,
+});
+
+
+export { createWatchlistActionCreator, loadWatchlistsActionCreator, selectWatchlistActionCreator };

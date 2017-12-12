@@ -1,9 +1,11 @@
 import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
 
-import { createWatchlistAction, loadWatchlistsAction } from '../../state/actions/watchlistActions';
+import {
+    createWatchlistActionCreator, loadWatchlistsActionCreator, selectWatchlistActionCreator,
+} from '../../state/actions/watchlistActions';
 
 
 class Watchlists extends React.Component {
@@ -11,6 +13,7 @@ class Watchlists extends React.Component {
         if (_.isEmpty(this.props.watchlists)) {
             this.props.loadWatchlists();
         }
+        this.props.selectWatchlist(_.head(this.props.watchlists));
     }
     get addWatchlistForm() {
         return (
@@ -23,7 +26,14 @@ class Watchlists extends React.Component {
     get watchlistsList() {
         return (
             <ul>
-                {_.map(this.props.watchlists, watchlist => <li key={watchlist.id}>{watchlist.name}</li>)}
+                {_.map(this.props.watchlists, watchlist =>
+                    <li
+                        key={watchlist.id}
+                        onClick={() => this.props.selectWatchlist(watchlist.id)}
+                    >
+                        {watchlist.name}
+                    </li>
+                )}
             </ul>
         );
     }
@@ -43,10 +53,13 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     createWatchlist: watchlistInfo => {
-        dispatch(createWatchlistAction(watchlistInfo));
+        dispatch(createWatchlistActionCreator(watchlistInfo));
     },
     loadWatchlists: () => {
-        dispatch(loadWatchlistsAction());
+        dispatch(loadWatchlistsActionCreator());
+    },
+    selectWatchlist: watchlistId => {
+        dispatch(selectWatchlistActionCreator(watchlistId))
     },
 });
 
@@ -54,6 +67,7 @@ const ConnectedWatchlists = connect(mapStateToProps, mapDispatchToProps)(Watchli
 
 const WrappedWatchlists = reduxForm({
     form: 'createWatchlist',
+    onSubmitSuccess: (result, dispatch) => { dispatch(reset('createWatchlist')); },
 })(ConnectedWatchlists)
 
 export default WrappedWatchlists;
