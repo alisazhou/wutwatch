@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import status, viewsets
 from rest_framework.response import Response
 
 from watchlists.models import WatchList
@@ -24,5 +24,6 @@ class MovieViewSet(viewsets.ModelViewSet):
         # create the Movie instance, and add it to the designated WatchList
         response = super().create(request, *args, **kwargs)
         watchlist.movies.add(response.data['id'])
+        response.data['watchlists'] = [watchlist.id]
 
         return response
