@@ -1,6 +1,7 @@
 import {
     CREATE_WATCHLIST_FAILURE, CREATE_WATCHLIST_REQUEST, CREATE_WATCHLIST_SUCCESS,
     LOAD_WATCHLISTS_FAILURE, LOAD_WATCHLISTS_REQUEST, LOAD_WATCHLISTS_SUCCESS,
+    ADD_WATCHER_FAILURE, ADD_WATCHER_REQUEST, ADD_WATCHER_SUCCESS,
     SELECT_WATCHLIST,
 } from './actionTypes';
 
@@ -86,10 +87,53 @@ const loadWatchlistsActionCreator = () => {
 };
 
 
+const addWatcherFailureActionCreator = err => ({
+    type: ADD_WATCHER_FAILURE,
+    err,
+});
+const addWatcherRequestActionCreator = () => ({
+    type: ADD_WATCHER_REQUEST,
+});
+const addWatcherSuccessActionCreator = watchlist => ({
+    type: ADD_WATCHER_SUCCESS,
+    watchlist,
+});
+const addWatcherActionCreator = (watchlistId, watcherInfo) => {
+    const config = {
+        method: 'PATCH',
+        headers: HEADERS,
+        body: JSON.stringify(watcherInfo),
+    };
+
+    return dispatch => {
+        if (!watchlistId) {
+            dispatch(addWatcherFailureActionCreator('Need to specify a watchlist.'));
+        }
+
+        dispatch(addWatcherRequestActionCreator());
+
+        fetch(`http://${window.location.host}/api/watchlists/${watchlistId}/`, config)
+            .then(response => response.ok ? response.json() : Promise.reject(response.text()))
+            .then(json => {
+                console.log(json);
+                dispatch(addWatcherSuccessActionCreator(json));
+            }).catch(err => {
+                console.log(err);
+                dispatch(addWatcherFailureActionCreator(err));
+            });
+    }
+};
+
+
 const selectWatchlistActionCreator = selectedWatchlist => ({
     type: SELECT_WATCHLIST,
     selectedWatchlist,
 });
 
 
-export { createWatchlistActionCreator, loadWatchlistsActionCreator, selectWatchlistActionCreator };
+export {
+    createWatchlistActionCreator,
+    loadWatchlistsActionCreator,
+    addWatcherActionCreator,
+    selectWatchlistActionCreator,
+};

@@ -8,6 +8,7 @@ import {
     addWatcherActionCreator,
     selectWatchlistActionCreator,
 } from '../../state/actions/watchlistActions';
+import AddWatcherForm from './AddWatcherForm';
 import AddWatchlistForm from './AddWatchlistForm';
 
 
@@ -34,8 +35,9 @@ class Watchlists extends React.Component {
     render() {
         return (
             <div>
-                {this.watchlistsList}
                 <AddWatchlistForm />
+                <AddWatcherForm />
+                {this.watchlistsList}
             </div>
         );
     }
