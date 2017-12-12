@@ -1,4 +1,5 @@
 from rest_framework import status, viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from profiles.models import Profile
@@ -7,6 +8,7 @@ from .serializers import WatchListSerializer
 
 
 class WatchListViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = WatchList.objects.all()
     serializer_class = WatchListSerializer
 
@@ -31,7 +33,7 @@ class WatchListViewSet(viewsets.ModelViewSet):
         if watcher_email:
             try:
                 watcher = Profile.objects.get(user__username=watcher_email)
-            except Profile.DoesNotExcept:
+            except Profile.DoesNotExist:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
 
             instance.watchers.add(watcher)

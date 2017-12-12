@@ -67,11 +67,7 @@ const loadMoviesSuccessActionCreator = movies => ({
 const loadMoviesAction = () => {
     const config = {
         method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-        },
+        headers: HEADERS,
     };
 
     return dispatch => {
