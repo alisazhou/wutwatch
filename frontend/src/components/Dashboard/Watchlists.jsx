@@ -13,7 +13,6 @@ class Watchlists extends React.Component {
         if (_.isEmpty(this.props.watchlists)) {
             this.props.loadWatchlists();
         }
-        this.props.selectWatchlist(_.head(this.props.watchlists));
     }
     get addWatchlistForm() {
         return (
