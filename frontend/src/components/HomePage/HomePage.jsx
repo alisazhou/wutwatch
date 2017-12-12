@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 
 import LoginPage from './LoginPage';
-import Dashboard from '../Dashboard';
+import Dashboard from '../Dashboard/Dashboard';
 
 
 class HomePage extends React.Component {

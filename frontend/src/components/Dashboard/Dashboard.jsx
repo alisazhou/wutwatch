@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-import { createMovieAction, loadMoviesAction } from '../state/actions/movieActions';
-import requireAuth from './requireAuth';
+import { createMovieAction, loadMoviesAction } from '../../state/actions/movieActions';
+import requireAuth from '../requireAuth';
+import Watchlists from './Watchlists';
 
 
 class Dashboard extends React.Component {
@@ -12,17 +13,20 @@ class Dashboard extends React.Component {
     }
     render() {
         return (
-            <form onSubmit={this.props.handleSubmit(this.props.createMovie)}>
-                name: <Field component="input" type="text" name="name" />
-                <button type="submit">Add Movie</button>
-            </form>
+            <div>
+                <Watchlists />
+                <form onSubmit={this.props.handleSubmit(this.props.createMovie)}>
+                    name: <Field component="input" type="text" name="name" />
+                    <button type="submit">Add Movie</button>
+                </form>
+            </div>
         );
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    createMovie: movieName => {
-        dispatch(createMovieAction(movieName));
+    createMovie: movieInfo => {
+        dispatch(createMovieAction(movieInfo));
     },
     loadMovies: () => {
         dispatch(loadMoviesAction());
