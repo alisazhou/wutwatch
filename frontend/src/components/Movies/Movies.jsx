@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { loadMoviesActionCreator } from '../../state/actions/movieActions';
 import AddMovieForm from './AddMovieForm';
+import PickMovieButton from './PickMovieButton';
 
 
 class Movies extends React.Component {
@@ -12,21 +13,27 @@ class Movies extends React.Component {
             this.props.loadMovies();
         }
     }
-    get moviesList() {
+    get movies() {
         // if selected watchlist, show only movies in list; else show all movies
-        const moviesInSelectedWatchlist = this.props.selectedWatchlist ?
-            _.filter(this.props.movies, movie =>
-                _.includes(movie.watchlists, this.props.selectedWatchlist)
-            ) : this.props.movies;
+        if (!this.props.selectedWatchlist) {
+            return this.props.movies;
+        }
+
+        return _.filter(this.props.movies, movie =>
+            _.includes(movie.watchlists, this.props.selectedWatchlist)
+        );
+    }
+    get moviesList() {
         return (
             <ul>
-                {_.map(moviesInSelectedWatchlist, movie => <li key={movie.id}>{movie.name}</li>)}
+                {_.map(this.movies, movie => <li key={movie.id}>{movie.name}</li>)}
             </ul>
         );
     }
     render() {
         return (
             <div>
+                <PickMovieButton movies={this.movies} />{this.props.selectedMovie.name}
                 <AddMovieForm />
                 {this.moviesList}
             </div>
@@ -36,6 +43,7 @@ class Movies extends React.Component {
 
 const mapStateToProps = state => ({
     movies: state.movies.movies,
+    selectedMovie: state.movies.selectedMovie,
     selectedWatchlist: state.watchlists.selectedWatchlist,
 });
 

@@ -1,6 +1,7 @@
 import {
     CREATE_MOVIE_FAILURE, CREATE_MOVIE_REQUEST, CREATE_MOVIE_SUCCESS,
     LOAD_MOVIES_FAILURE, LOAD_MOVIES_REQUEST, LOAD_MOVIES_SUCCESS,
+    SELECT_MOVIE,
 } from './actionTypes';
 
 
@@ -83,4 +84,9 @@ const loadMoviesActionCreator = () => {
     };
 };
 
-export { createMovieActionCreator, loadMoviesActionCreator };
+const selectMovieActionCreator = selectedMovie => ({
+    type: SELECT_MOVIE,
+    selectedMovie,
+})
+
+export { createMovieActionCreator, loadMoviesActionCreator, selectMovieActionCreator };

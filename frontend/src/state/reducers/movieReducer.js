@@ -3,6 +3,7 @@ import _ from 'lodash';
 import {
     CREATE_MOVIE_FAILURE, CREATE_MOVIE_REQUEST, CREATE_MOVIE_SUCCESS,
     LOAD_MOVIES_FAILURE, LOAD_MOVIES_REQUEST, LOAD_MOVIES_SUCCESS,
+    SELECT_MOVIE,
 } from '../actions/actionTypes';
 
 
@@ -10,6 +11,7 @@ const INITIAL_STATE = {
     err: '',
     isFetching: false,
     movies: [],
+    selectedMovie: {},
 };
 
 const movieReducer = (state = INITIAL_STATE, action) => {
@@ -34,6 +36,10 @@ const movieReducer = (state = INITIAL_STATE, action) => {
             err: '',
             isFetching: false,
             movies: action.movies,
+        };
+    } else if (action.type == SELECT_MOVIE) {
+        return {...state,
+            selectedMovie: action.selectedMovie,
         };
     }
 
