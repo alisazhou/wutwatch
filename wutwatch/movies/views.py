@@ -1,5 +1,4 @@
-from rest_framework import status, viewsets
-from rest_framework import permissions
+from rest_framework import permissions, status, viewsets
 from rest_framework.response import Response
 
 from profiles.models import Profile
@@ -8,13 +7,13 @@ from .models import Movie
 from .serializers import MovieSerializer
 
 
-class IsWatcherOrReadOnly(permissions.BasePermission):
+class IsInSharedWatchlist(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        return request.user.profile == Profile.objects.get(watchlists__movies=obj)
+        return request.user.profile in Profile.objects.filter(watchlists__movies=obj)
 
 
 class MovieViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.IsAuthenticated, IsWatcherOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticated, IsInSharedWatchlist,)
     serializer_class = MovieSerializer
 
     def get_queryset(self):
