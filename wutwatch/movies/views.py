@@ -1,14 +1,24 @@
 from rest_framework import status, viewsets
+from rest_framework import permissions
 from rest_framework.response import Response
 
+from profiles.models import Profile
 from watchlists.models import WatchList
 from .models import Movie
 from .serializers import MovieSerializer
 
 
+class IsWatcherOrReadOnly(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return request.user.profile == Profile.objects.get(watchlists__movies=obj)
+
+
 class MovieViewSet(viewsets.ModelViewSet):
-    queryset = Movie.objects.all()
+    permission_classes = (permissions.IsAuthenticated, IsWatcherOrReadOnly,)
     serializer_class = MovieSerializer
+
+    def get_queryset(self):
+        return Movie.objects.filter(watchlists__watchers=self.request.user.profile)
 
     def create(self, request, *args, **kwargs):
         try:
