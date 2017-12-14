@@ -1,8 +1,8 @@
 import React from 'react';
 
 import requireAuth from '../requireAuth';
-import Movies from './Movies';
-import Watchlists from './Watchlists';
+import Movies from '../Movies/Movies';
+import Watchlists from '../Watchlists/Watchlists';
 
 
 const Dashboard = props => (
