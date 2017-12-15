@@ -2,6 +2,7 @@ import {
     CREATE_WATCHLIST_FAILURE, CREATE_WATCHLIST_REQUEST, CREATE_WATCHLIST_SUCCESS,
     LOAD_WATCHLISTS_FAILURE, LOAD_WATCHLISTS_REQUEST, LOAD_WATCHLISTS_SUCCESS,
     ADD_WATCHER_FAILURE, ADD_WATCHER_REQUEST, ADD_WATCHER_SUCCESS,
+    REMOVE_MOVIE_FAILURE, REMOVE_MOVIE_REQUEST, REMOVE_MOVIE_SUCCESS,
     SELECT_WATCHLIST,
 } from './actionTypes';
 
@@ -115,6 +116,40 @@ const addWatcherActionCreator = (watchlistId, watcherInfo) => {
 };
 
 
+const removeMovieFailureActionCreator = err => ({
+    type: REMOVE_MOVIE_FAILURE,
+    err,
+});
+const removeMovieRequestActionCreator = () => ({
+    type: REMOVE_MOVIE_REQUEST,
+});
+const removeMovieSuccessActionCreator = watchlist => ({
+    type: REMOVE_MOVIE_SUCCESS,
+    watchlist,
+});
+const removeMovieActionCreator = (movieId, watchlistId) => {
+    const config = {
+        method: 'POST',
+        headers: HEADERS,
+        body: JSON.stringify({ movie: movieId }),
+    };
+
+    return dispatch => {
+        dispatch(removeMovieRequestActionCreator());
+
+        fetch(`http://${window.location.host}/api/watchlists/${watchlistId}/remove-movie/`, config)
+            .then(response => response.ok ? response.json() : Promise.reject(response.text()))
+            .then(json => {
+                console.log(json);
+                dispatch(removeMovieSuccessActionCreator(json));
+            }).catch(err => {
+                console.log(err);
+                dispatch(removeMovieFailureActionCreator(err));
+            });
+    }
+}
+
+
 const selectWatchlistActionCreator = selectedWatchlist => ({
     type: SELECT_WATCHLIST,
     selectedWatchlist,
@@ -125,5 +160,6 @@ export {
     createWatchlistActionCreator,
     loadWatchlistsActionCreator,
     addWatcherActionCreator,
+    removeMovieActionCreator,
     selectWatchlistActionCreator,
 };
