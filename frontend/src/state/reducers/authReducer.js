@@ -5,24 +5,16 @@ import {
 
 
 const authReducer = (state = {}, action) => {
-    if (action.type == CREATE_USER_FAILURE || action.type == LOGIN_USER_FAILURE) {
-        return {...state,
-            err: action.err,
-            isAuthenticated: false,
-            isFetching: false,
-        };
-    } else if (action.type == CREATE_USER_REQUEST || action.type == LOGIN_USER_REQUEST) {
-        return {...state,
-            err: '',
-            isAuthenticated: false,
-            isFetching: true,
-        };
-    } else if (action.type == CREATE_USER_SUCCESS || action.type == LOGIN_USER_SUCCESS) {
-        return {...state,
-            err: '',
-            isAuthenticated: true,
-            isFetching: false,
-        };
+    switch (action.type) {
+        case CREATE_USER_FAILURE:
+        case LOGIN_USER_FAILURE:
+            return { ...state, err: action.err, isAuthenticated: false, isFetching: false };
+        case CREATE_USER_REQUEST:
+        case LOGIN_USER_REQUEST:
+            return { ...state, err: '', isAuthenticated: false, isFetching: true };
+        case CREATE_USER_SUCCESS:
+        case LOGIN_USER_SUCCESS:
+            return { ...state, err: '', isAuthenticated: true, isFetching: false };
     }
 
     return state;
