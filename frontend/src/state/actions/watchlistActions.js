@@ -18,16 +18,13 @@ const createWatchlistFailureActionCreator = err => ({
     type: CREATE_WATCHLIST_FAILURE,
     err,
 });
-
 const createWatchlistRequestActionCreator = () => ({
     type: CREATE_WATCHLIST_REQUEST,
 });
-
 const createWatchlistSuccessActionCreator = watchlist => ({
     type: CREATE_WATCHLIST_SUCCESS,
     watchlist,
 });
-
 const createWatchlistActionCreator = info => {
     const config = {
         method: 'POST',
@@ -55,16 +52,13 @@ const loadWatchlistsFailureActionCreator = err => ({
     type: LOAD_WATCHLISTS_FAILURE,
     err,
 });
-
 const loadWatchlistsRequestActionCreator = () => ({
     type: LOAD_WATCHLISTS_REQUEST,
 });
-
 const loadWatchlistsSuccessActionCreator = watchlists => ({
     type: LOAD_WATCHLISTS_SUCCESS,
     watchlists,
 });
-
 const loadWatchlistsActionCreator = () => {
     const config = {
         method: 'GET',
@@ -106,10 +100,6 @@ const addWatcherActionCreator = (watchlistId, watcherInfo) => {
     };
 
     return dispatch => {
-        if (!watchlistId) {
-            dispatch(addWatcherFailureActionCreator('Need to specify a watchlist.'));
-        }
-
         dispatch(addWatcherRequestActionCreator());
 
         fetch(`http://${window.location.host}/api/watchlists/${watchlistId}/`, config)

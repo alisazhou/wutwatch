@@ -16,16 +16,13 @@ const createMovieFailureActionCreator = err => ({
     type: CREATE_MOVIE_FAILURE,
     err,
 });
-
 const createMovieRequestActionCreator = () => ({
     type: CREATE_MOVIE_REQUEST,
 });
-
 const createMovieSuccessActionCreator = movie => ({
     type: CREATE_MOVIE_SUCCESS,
     movie,
 });
-
 const createMovieActionCreator = info => {
     const config = {
         method: 'POST',
@@ -53,16 +50,13 @@ const loadMoviesFailureActionCreator = err => ({
     type: LOAD_MOVIES_FAILURE,
     err,
 });
-
 const loadMoviesRequestActionCreator = () => ({
     type: LOAD_MOVIES_REQUEST,
 });
-
 const loadMoviesSuccessActionCreator = movies => ({
     type: LOAD_MOVIES_SUCCESS,
     movies,
 });
-
 const loadMoviesActionCreator = () => {
     const config = {
         method: 'GET',
@@ -83,6 +77,7 @@ const loadMoviesActionCreator = () => {
             });
     };
 };
+
 
 const selectMovieActionCreator = selectedMovie => ({
     type: SELECT_MOVIE,

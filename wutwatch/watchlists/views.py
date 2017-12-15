@@ -47,8 +47,6 @@ class WatchListViewSet(viewsets.ModelViewSet):
 
             instance.watchers.add(watcher)
 
-        instance.save()
-
         return Response(self.get_serializer(instance).data)
 
     @detail_route(methods=['post'], url_path='remove-movie')
