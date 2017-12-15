@@ -7,15 +7,19 @@ import { selectMovieActionCreator } from '../../state/actions/movieActions';
 
 
 class PickMovieButton extends React.Component {
+    state = {
+        lastPickedAt: moment(localStorage.getItem('lastPickedAt')),
+    };
+
     handlePickMovie = () => {
         const selectedMovie = _.sample(this.props.movies);
         this.props.selectMovie(selectedMovie);
-        localStorage.setItem('lastPicked', moment().format());
+        localStorage.setItem('lastPickedAt', moment().format());
+        this.setState({ lastPickedAt: moment(localStorage.getItem('lastPickedAt')) });
     }
 
     render() {
-        const lastPicked = moment(localStorage.getItem('lastPicked'));
-        if (lastPicked.isAfter(moment().subtract(2, 'hours'))) {
+        if (this.state.lastPickedAt.isAfter(moment().subtract(2, 'hours'))) {
             return (<div>Please watch the movie first before picking another one</div>);
         }
         return (
