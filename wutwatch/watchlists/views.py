@@ -1,6 +1,8 @@
 from rest_framework import permissions, status, viewsets
+from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
+from movies.models import Movie
 from profiles.models import Profile
 from .models import WatchList
 from .serializers import WatchListSerializer
@@ -48,3 +50,18 @@ class WatchListViewSet(viewsets.ModelViewSet):
         instance.save()
 
         return Response(self.get_serializer(instance).data)
+
+    @detail_route(methods=['post'], url_path='remove-movie')
+    def remove_movie(self, request, pk=None):
+        watchlist = WatchList.objects.get(id=pk)
+        try:
+            movie = Movie.objects.get(id=request.data.get('movie'))
+        except (KeyError, Movie.DoesNotExist):
+            data = {'movie': 'Need a valid movie id to be removed from this watchlist'}
+            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+
+        watchlist.movies.remove(movie)
+
+        response = Response(self.get_serializer(watchlist).data)
+
+        return response
