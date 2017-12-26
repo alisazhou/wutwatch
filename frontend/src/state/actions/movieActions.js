@@ -1,7 +1,7 @@
 import {
     CREATE_MOVIE_FAILURE, CREATE_MOVIE_REQUEST, CREATE_MOVIE_SUCCESS,
     LOAD_MOVIES_FAILURE, LOAD_MOVIES_REQUEST, LOAD_MOVIES_SUCCESS,
-    SEARCH_MOVIES_FAILURE, SEARCH_MOVIES_REQUEST, SEARCH_MOVIES_SUCCESS,
+    SEARCH_MOVIE_FAILURE, SEARCH_MOVIE_REQUEST, SEARCH_MOVIE_SUCCESS,
     SELECT_MOVIE,
 } from './actionTypes';
 
@@ -44,7 +44,7 @@ const createMovieActionCreator = info => {
                 dispatch(createMovieFailureActionCreator(err));
             });
     };
-}
+};
 
 
 const loadMoviesFailureActionCreator = err => ({
@@ -81,14 +81,14 @@ const loadMoviesActionCreator = () => {
 
 
 const searchMovieFailureActionCreator = err => ({
-    type: SEARCH_MOVIES_FAILURE,
+    type: SEARCH_MOVIE_FAILURE,
     err,
 });
 const searchMovieRequestActionCreator = () => ({
-    type: SEARCH_MOVIES_REQUEST,
+    type: SEARCH_MOVIE_REQUEST,
 });
 const searchMovieSuccessActionCreator = movie => ({
-    type: SEARCH_MOVIES_SUCCESS,
+    type: SEARCH_MOVIE_SUCCESS,
     movie,
 });
 const searchMovieActionCreator = movieName => {
