@@ -11,13 +11,11 @@ class AddMovieForm extends React.Component {
         this.props.createMovie(movieInfo);
     }
     render() {
-        if (!this.props.selectedWatchlist) {
-            return null;
-        }
-
         return (
             <form onSubmit={this.props.handleSubmit(this.handleCreateMovie)}>
                 name: <Field component="input" type="text" name="name" />
+                poster url: <Field component="input" type="text" name="poster_url" />
+                release date: <Field component="input" type="date" />
                 <button type="submit">Add Movie to Watchlist</button>
             </form>
         );

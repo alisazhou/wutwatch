@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { loadMoviesActionCreator } from '../../state/actions/movieActions';
 import AddMovieForm from './AddMovieForm';
 import PickMovieButton from './PickMovieButton';
+import SearchMovieForm from './SearchMovieForm';
 
 
 class Movies extends React.Component {
@@ -34,7 +35,10 @@ class Movies extends React.Component {
         return (
             <div>
                 <PickMovieButton movies={this.movies} />{this.props.selectedMovie.name}
-                <AddMovieForm />
+                {this.props.selectedWatchlist && <div>
+                    <AddMovieForm />
+                    <SearchMovieForm />
+                </div>}
                 {this.moviesList}
             </div>
         );
