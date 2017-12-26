@@ -31,6 +31,18 @@ class Movies extends React.Component {
             </ul>
         );
     }
+    get searchedMovie() {
+        if (_.isEmpty(this.props.searchedMovie)) {
+            return null;
+        }
+
+        return (
+            <div>
+                {this.props.searchedMovie.name}<br />
+                <img src={this.props.searchedMovie.poster_url} />
+            </div>
+        );
+    }
     render() {
         return (
             <div>
@@ -38,6 +50,7 @@ class Movies extends React.Component {
                 {this.props.selectedWatchlist && <div>
                     <AddMovieForm />
                     <SearchMovieForm />
+                    {this.searchedMovie}
                 </div>}
                 {this.moviesList}
             </div>
@@ -47,6 +60,7 @@ class Movies extends React.Component {
 
 const mapStateToProps = state => ({
     movies: state.movies.movies,
+    searchedMovie: state.movies.searchedMovie,
     selectedMovie: state.movies.selectedMovie,
     selectedWatchlist: state.watchlists.selectedWatchlist,
 });

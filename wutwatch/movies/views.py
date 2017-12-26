@@ -56,7 +56,7 @@ def search_movie(request, *args, **kwargs):
     movie_info = {
         'name': result['title'],
         'moviedb_id': result['id'],
-        'poster_url': 'https://image.tmdb.org/t/p/w500{}'.format(result['poster_path']),
+        'poster_url': 'https://image.tmdb.org/t/p/w300{}'.format(result['poster_path']),
         'release_date': result['release_date'],
     }
 
