@@ -1,6 +1,7 @@
 import {
     CREATE_MOVIE_FAILURE, CREATE_MOVIE_REQUEST, CREATE_MOVIE_SUCCESS,
     LOAD_MOVIES_FAILURE, LOAD_MOVIES_REQUEST, LOAD_MOVIES_SUCCESS,
+    SEARCH_MOVIES_FAILURE, SEARCH_MOVIES_REQUEST, SEARCH_MOVIES_SUCCESS,
     SELECT_MOVIE,
 } from './actionTypes';
 
@@ -79,9 +80,48 @@ const loadMoviesActionCreator = () => {
 };
 
 
+const searchMovieFailureActionCreator = err => ({
+    type: SEARCH_MOVIES_FAILURE,
+    err,
+});
+const searchMovieRequestActionCreator = () => ({
+    type: SEARCH_MOVIES_REQUEST,
+});
+const searchMovieSuccessActionCreator = movie => ({
+    type: SEARCH_MOVIES_SUCCESS,
+    movie,
+});
+const searchMovieActionCreator = movieName => {
+    const config = {
+        method: 'POST',
+        headers: HEADERS,
+        body: JSON.stringify(movieName),
+    };
+
+    return dispatch => {
+        dispatch(searchMovieRequestActionCreator());
+
+        return fetch(`http://${window.location.host}/api/search-movie/`, config)
+            .then(response => response.ok ? response.json() : Promise.reject(response.text()))
+            .then(json => {
+                console.log(json);
+                dispatch(searchMovieSuccessActionCreator(json));
+            }).catch(err => {
+                console.log(err);
+                dispatch(searchMovieFailureActionCreator(err));
+            });
+    };
+};
+
+
 const selectMovieActionCreator = selectedMovie => ({
     type: SELECT_MOVIE,
     selectedMovie,
-})
+});
 
-export { createMovieActionCreator, loadMoviesActionCreator, selectMovieActionCreator };
+export {
+    createMovieActionCreator,
+    loadMoviesActionCreator,
+    searchMovieActionCreator,
+    selectMovieActionCreator,
+};
