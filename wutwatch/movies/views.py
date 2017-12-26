@@ -1,4 +1,8 @@
+import json
+import os
+import requests
 from rest_framework import permissions, status, viewsets
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from profiles.models import Profile
@@ -37,3 +41,23 @@ class MovieViewSet(viewsets.ModelViewSet):
         response.data['watchlists'] = [watchlist.id]
 
         return response
+
+
+@api_view(http_method_names=['POST'])
+def search_movie(request, *args, **kwargs):
+    search_url = 'https://api.themoviedb.org/3/search/movie'
+    moviedb_apikey = os.getenv('MOVIEDB_APIKEY')
+    movie_name = request.data['movie_name']
+    params = {'api_key': moviedb_apikey, 'include_adult': True, 'page': 1, 'query': movie_name}
+    moviedb_response = requests.get(search_url, params=params)
+    # TODO: check if response is okay, else return error
+    parsed_response = json.loads(moviedb_response.text)
+    result = parsed_response['results'][0]
+    movie_info = {
+        'name': result['title'],
+        'moviedb_id': result['id'],
+        'poster_url': 'https://image.tmdb.org/t/p/w500{}'.format(result['poster_path']),
+        'release_date': result['release_date'],
+    }
+
+    return Response(movie_info, status=status.HTTP_200_OK)

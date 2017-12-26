@@ -3,8 +3,10 @@ from django.db import models
 
 class Movie(models.Model):
     name = models.CharField(max_length=100)
-    year = models.IntegerField(blank=True, null=True)
-    # TODO: add poster and rotten tomato score
+    release_date = models.DateField(blank=True, null=True)
+    poster_url = models.URLField(blank=True, null=True)
+    moviedb_id = models.CharField(max_length=20, blank=True, null=True)
+
 
     @property
     def watchlist(self):
