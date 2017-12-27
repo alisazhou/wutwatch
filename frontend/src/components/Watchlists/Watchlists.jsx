@@ -2,14 +2,10 @@ import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 
-import {
-    createWatchlistActionCreator,
-    loadWatchlistsActionCreator,
-    addWatcherActionCreator,
-    selectWatchlistActionCreator,
-} from '../../state/actions/watchlistActions';
+import { loadWatchlistsActionCreator } from '../../state/actions/watchlistActions';
 import AddWatcherForm from './AddWatcherForm';
 import AddWatchlistForm from './AddWatchlistForm';
+import SelectWatchlist from './SelectWatchlist';
 
 
 class Watchlists extends React.Component {
@@ -18,26 +14,12 @@ class Watchlists extends React.Component {
             this.props.loadWatchlists();
         }
     }
-    get watchlistsList() {
-        return (
-            <ul>
-                {_.map(this.props.watchlists, watchlist =>
-                    <li
-                        key={watchlist.id}
-                        onClick={() => this.props.selectWatchlist(watchlist.id)}
-                    >
-                        {watchlist.name}
-                    </li>
-                )}
-            </ul>
-        );
-    }
     render() {
         return (
             <div>
                 <AddWatchlistForm />
+                <SelectWatchlist />
                 <AddWatcherForm />
-                {this.watchlistsList}
             </div>
         );
     }
@@ -50,9 +32,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     loadWatchlists: () => {
         dispatch(loadWatchlistsActionCreator());
-    },
-    selectWatchlist: watchlistId => {
-        dispatch(selectWatchlistActionCreator(watchlistId))
     },
 });
 

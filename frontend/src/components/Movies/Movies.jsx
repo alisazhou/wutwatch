@@ -46,7 +46,7 @@ class Movies extends React.Component {
     render() {
         return (
             <div>
-                <PickMovieButton movies={this.movies} />{this.props.selectedMovie.name}
+                <PickMovieButton movies={this.movies} />{this.props.selectedMovieName}
                 {this.props.selectedWatchlist && <div>
                     <AddMovieForm />
                     <SearchMovieForm />
@@ -61,7 +61,7 @@ class Movies extends React.Component {
 const mapStateToProps = state => ({
     movies: state.movies.movies,
     searchedMovie: state.movies.searchedMovie,
-    selectedMovie: state.movies.selectedMovie,
+    selectedMovieName: state.movies.selectedMovie.name,
     selectedWatchlist: state.watchlists.selectedWatchlist,
 });
 

@@ -150,10 +150,15 @@ const removeMovieActionCreator = (movieId, watchlistId) => {
 }
 
 
-const selectWatchlistActionCreator = selectedWatchlist => ({
-    type: SELECT_WATCHLIST,
-    selectedWatchlist,
-});
+const selectWatchlistActionCreator = selectedWatchlist => {
+    if (!selectedWatchlist) {
+        selectedWatchlist = {};
+    }
+    return {
+        type: SELECT_WATCHLIST,
+        selectedWatchlist,
+    };
+};
 
 
 export {

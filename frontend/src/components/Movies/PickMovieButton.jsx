@@ -20,6 +20,7 @@ class PickMovieButton extends React.Component {
 
     render() {
         if (this.state.lastPickedAt.isAfter(moment().subtract(2, 'hours'))) {
+            // TODO: change this to disabled button with prompt text
             return (<div>Please watch the movie first before picking another one</div>);
         }
         return (

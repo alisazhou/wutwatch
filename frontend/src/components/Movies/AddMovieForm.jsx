@@ -15,7 +15,7 @@ class AddMovieForm extends React.Component {
             <form onSubmit={this.props.handleSubmit(this.handleCreateMovie)}>
                 name: <Field component="input" type="text" name="name" />
                 poster url: <Field component="input" type="text" name="poster_url" />
-                release date: <Field component="input" type="date" />
+                release date: <Field component="input" type="date" name="release_date" />
                 <button type="submit">Add Movie to Watchlist</button>
             </form>
         );
