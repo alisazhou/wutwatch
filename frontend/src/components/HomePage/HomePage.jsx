@@ -1,14 +1,21 @@
 import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 
-import LoginPage from './LoginPage';
 import Dashboard from './Dashboard';
+import LoginPage from './LoginPage';
+import Navbar from '../Navbar/Navbar';
 
+
+const style = {
+    color: '#ffffff',
+};
 
 class HomePage extends React.Component {
     render() {
+
         return (
-            <div>
+            <div style={style}>
+                <Navbar />
                 <Link to="/">Dashboard</Link>
                 <Link to="/login">Login</Link>
                 <Switch>
