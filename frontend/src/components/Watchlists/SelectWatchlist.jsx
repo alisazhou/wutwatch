@@ -11,7 +11,7 @@ const SelectWatchlist = props => {
 
     return (
         <select name="selectWatchlist" onChange={handleSelect}>
-            <option>See all movies</option>
+            <option value={0}>See all movies</option>
             {_.map(props.watchlists, watchlist =>
                 <option key={watchlist.id} value={watchlist.id}>{watchlist.name}</option>
             )}

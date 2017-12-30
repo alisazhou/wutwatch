@@ -16,7 +16,7 @@ class Movies extends React.Component {
     }
     get movies() {
         // if selected watchlist, show only movies in list; else show all movies
-        if (!this.props.selectedWatchlist) {
+        if (this.props.selectedWatchlist === 0) {
             return this.props.movies;
         }
 
@@ -47,11 +47,11 @@ class Movies extends React.Component {
         return (
             <div>
                 <PickMovieButton movies={this.movies} />{this.props.selectedMovieName}
-                {this.props.selectedWatchlist && <div>
+                {this.props.selectedWatchlist ? (<div>
                     <AddMovieForm />
                     <SearchMovieForm />
                     {this.searchedMovie}
-                </div>}
+                </div>) : ''}
                 {this.moviesList}
             </div>
         );
