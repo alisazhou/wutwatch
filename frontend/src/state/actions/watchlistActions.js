@@ -11,7 +11,6 @@ const HEADERS = {
   'Accept': 'application/json',
   'Access-Control-Allow-Origin': '*',
   'Content-Type': 'application/json',
-  'Authorization': `Token ${localStorage.getItem('token')}`,
 };
 
 
@@ -29,7 +28,9 @@ const createWatchlistSuccessActionCreator = watchlist => ({
 const createWatchlistActionCreator = info => {
     const config = {
         method: 'POST',
-        headers: HEADERS,
+        headers: {...HEADERS,
+            'Authorization': `Token ${localStorage.getItem('token')}`,
+        },
         body: JSON.stringify(info),
     };
 
@@ -63,7 +64,9 @@ const loadWatchlistsSuccessActionCreator = watchlists => ({
 const loadWatchlistsActionCreator = () => {
     const config = {
         method: 'GET',
-        headers: HEADERS,
+        headers: {...HEADERS,
+            'Authorization': `Token ${localStorage.getItem('token')}`,
+        },
     };
 
     return dispatch => {
@@ -96,7 +99,9 @@ const addWatcherSuccessActionCreator = watchlist => ({
 const addWatcherActionCreator = (watchlistId, watcherInfo) => {
     const config = {
         method: 'PATCH',
-        headers: HEADERS,
+        headers: {...HEADERS,
+            'Authorization': `Token ${localStorage.getItem('token')}`,
+        },
         body: JSON.stringify(watcherInfo),
     };
 
@@ -130,7 +135,9 @@ const removeMovieSuccessActionCreator = watchlist => ({
 const removeMovieActionCreator = (movieId, watchlistId) => {
     const config = {
         method: 'POST',
-        headers: HEADERS,
+        headers: {...HEADERS,
+            'Authorization': `Token ${localStorage.getItem('token')}`,
+        },
         body: JSON.stringify({ movie: movieId }),
     };
 

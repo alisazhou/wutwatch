@@ -7,10 +7,9 @@ import {
 
 
 const HEADERS = {
-  'Accept': 'application/json',
-  'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/json',
-  'Authorization': `Token ${localStorage.getItem('token')}`,
+    'Accept': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
 };
 
 const createMovieFailureActionCreator = err => ({
@@ -27,7 +26,9 @@ const createMovieSuccessActionCreator = movie => ({
 const createMovieActionCreator = info => {
     const config = {
         method: 'POST',
-        headers: HEADERS,
+        headers: {...HEADERS,
+            'Authorization': `Token ${localStorage.getItem('token')}`,
+        },
         body: JSON.stringify(info),
     };
 
@@ -61,7 +62,9 @@ const loadMoviesSuccessActionCreator = movies => ({
 const loadMoviesActionCreator = () => {
     const config = {
         method: 'GET',
-        headers: HEADERS,
+        headers: {...HEADERS,
+            'Authorization': `Token ${localStorage.getItem('token')}`,
+        },
     };
 
     return dispatch => {
@@ -94,7 +97,9 @@ const searchMovieSuccessActionCreator = movie => ({
 const searchMovieActionCreator = movieName => {
     const config = {
         method: 'POST',
-        headers: HEADERS,
+        headers: {...HEADERS,
+            'Authorization': `Token ${localStorage.getItem('token')}`,
+        },
         body: JSON.stringify(movieName),
     };
 
