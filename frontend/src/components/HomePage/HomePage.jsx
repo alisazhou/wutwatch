@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
 
 import Dashboard from './Dashboard';
 import LoginPage from './LoginPage';
 import Navbar from '../Navbar/Navbar';
+import { loginUserSuccessActionCreator } from '../../state/actions/authActions';
 
 
 const style = {
@@ -12,16 +12,10 @@ const style = {
 
 class HomePage extends React.Component {
     render() {
-
         return (
             <div style={style}>
                 <Navbar />
-                <Link to="/">Dashboard</Link>
-                <Link to="/login">Login</Link>
-                <Switch>
-                    <Route exact path="/" component={Dashboard} />
-                    <Route exact path="/login" component={LoginPage} />
-                </Switch>
+                <Dashboard />
             </div>
         );
     }

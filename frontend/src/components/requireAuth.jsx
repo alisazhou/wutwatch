@@ -1,22 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+
+import LoginPage from './HomePage/LoginPage';
+import { loginUserSuccessActionCreator } from '../state/actions/authActions';
 
 
 const requireAuth = ProtectedComponent => {
-    const WrappedComponent = props => {
-        if (props.isAuthenticated || localStorage.hasOwnProperty('token')) {
-            return <ProtectedComponent />;
+    class WrappedComponent extends React.Component {
+        componentWillMount() {
+            if (localStorage.hasOwnProperty('token')) {
+                this.props.markAsAuthenticated();
+            }
         }
 
-        return <Redirect to="/login" />;
+        render() {
+            return this.props.isAuthenticated ? <ProtectedComponent /> : <LoginPage />;
+        }
     }
 
     const mapStateToProps = state => ({
         isAuthenticated: state.auth && state.auth.isAuthenticated,
     });
 
-    return connect(mapStateToProps)(WrappedComponent);
+    const mapDispatchToProps = dispatch => ({
+        markAsAuthenticated: () => {
+            dispatch(loginUserSuccessActionCreator());
+        },
+    });
+
+    return connect(mapStateToProps, mapDispatchToProps)(WrappedComponent);
 };
 
 export default requireAuth;

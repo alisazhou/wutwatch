@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 
 import { createUserAction, loginUserAction } from '../../state/actions/authActions';
@@ -25,9 +24,7 @@ class LoginPage extends React.Component {
     };
 
     render () {
-        if (this.props.isAuthenticated || localStorage.hasOwnProperty('token')) {
-            return <Redirect to="/" />
-        } else if (this.state.showLoginTab) {
+        if (this.state.showLoginTab) {
             return (
                 <div>
                     {this.tabs}

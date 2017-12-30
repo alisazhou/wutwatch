@@ -10,9 +10,8 @@ const typographyBody1 = {
 
 const typographyTitle = {
     color: textNormal,
-    fontFamily: 'Playfair Display, serif',
+    fontFamily: 'Arvo, serif',
     fontSize: '1.5em',
-    fontWeight: 700,
 };
 
 export {

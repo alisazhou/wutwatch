@@ -85,4 +85,4 @@ const loginUserAction = creds => {
 }
 
 
-export { createUserAction, loginUserAction };
+export { createUserAction, loginUserAction, loginUserSuccessActionCreator };
