@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import AccountCircleIcon from './AccountCircleIcon';
 import { backgroundAccent, typographyTitle } from '../cssConstants';
@@ -14,10 +15,14 @@ class Navbar extends React.Component {
         return (
             <div style={style}>
                 wutwatch
-                <AccountCircleIcon />
+                {this.props.isAuthenticated && <AccountCircleIcon />}
             </div>
         );
     }
 }
 
-export default Navbar;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+})
+
+export default connect(mapStateToProps)(Navbar);
