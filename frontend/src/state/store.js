@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import authReducer from './reducers/authReducer';
 import movieReducer from './reducers/movieReducer';
+import uiReducer from './reducers/uiReducer';
 import watchlistReducer from './reducers/watchlistReducer';
 
 
@@ -12,6 +13,7 @@ const reducers = combineReducers({
     auth: authReducer,
     form: formReducer,
     movies: movieReducer,
+    ui: uiReducer,
     watchlists: watchlistReducer,
 });
 

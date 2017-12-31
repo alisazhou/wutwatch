@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import LoginForm from '../Login/LoginForm';
 import SignUpForm from '../Login/SignUpForm';
 import { backgroundLight, buttonNormal, typographyBody1 } from '../cssConstants';
+import { showLoginTabActionCreator } from '../../state/actions/uiActions';
 
 
 const style = {
@@ -26,12 +27,8 @@ const buttonStyle = {
 
 
 class LoginPage extends React.Component {
-    state = {
-        showLoginTab: true,
-    };
-
-    handleLoginTabClick = showLoginTab => {
-        this.setState({ showLoginTab });
+    handleLoginTabClick = clickedLoginTab => {
+        this.props.showLoginTab(clickedLoginTab);
     }
 
     get tabs() {
@@ -46,19 +43,23 @@ class LoginPage extends React.Component {
     render () {
         return (
             <div style={style}>
-                {this.state.showLoginTab ? <LoginForm buttonStyle={buttonStyle} /> : <SignUpForm buttonStyle={buttonStyle} />}
+                {this.props.showingLoginTab ? <LoginForm buttonStyle={buttonStyle} /> : <SignUpForm buttonStyle={buttonStyle} />}
                 {this.tabs}
             </div>
         );
     }
 }
 
+const mapStateToProps = state => ({
+    showingLoginTab: state.ui.showingLoginTab,
+});
+
 const mapDispatchToProps = dispatch => ({
-    createUser: creds => {
-        dispatch(createUserAction(creds));
+    showLoginTab: clickedLoginTab => {
+        dispatch(showLoginTabActionCreator(clickedLoginTab));
     },
 });
 
-const ConnectedLoginPage = connect(undefined, mapDispatchToProps)(LoginPage);
+const ConnectedLoginPage = connect(mapStateToProps, mapDispatchToProps)(LoginPage);
 
 export default ConnectedLoginPage;

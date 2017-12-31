@@ -40,3 +40,6 @@ export const ADD_WATCHER_REQUEST = 'ADD_WATCHER_REQUEST';
 export const ADD_WATCHER_SUCCESS = 'ADD_WATCHER_SUCCESS';
 
 export const SELECT_WATCHLIST = 'SELECT_WATCHLIST';
+
+// UI reducer action types
+export const SHOW_LOGIN_TAB = 'SHOW_LOGIN_TAB';  // LoginPage
