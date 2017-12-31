@@ -8,10 +8,10 @@ import { createUserAction } from '../../state/actions/authActions';
 
 const SignUpForm = props =>
     <form onSubmit={props.handleSubmit(props.createUser)} style={props.style}>
-        <FieldGroup label="first name:" fieldComponent="input" fieldType="text" fieldName="first_name" />
-        <FieldGroup label="last name:" fieldComponent="input" fieldType="text" fieldName="last_name" />
         <FieldGroup label="email:" fieldComponent="input" fieldType="text" fieldName="email" />
         <FieldGroup label="password:" fieldComponent="input" fieldType="password" fieldName="password" />
+        <FieldGroup label="first name:" fieldComponent="input" fieldType="text" fieldName="first_name" />
+        <FieldGroup label="last name:" fieldComponent="input" fieldType="text" fieldName="last_name" />
         <button type='submit' style={props.buttonStyle}>Sign Up</button>
     </form>
 

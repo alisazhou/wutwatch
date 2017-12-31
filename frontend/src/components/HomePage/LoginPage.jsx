@@ -4,22 +4,22 @@ import { connect } from 'react-redux';
 import FormTabs from '../Login/FormTabs';
 import LoginForm from '../Login/LoginForm';
 import SignUpForm from '../Login/SignUpForm';
-import { backgroundLight, buttonNormal, typographyBody1 } from '../cssConstants';
+import { backgroundLight, buttonNormal, typographyBody1, typographySubtitle } from '../cssConstants';
 
 
 const style = {
     ...typographyBody1,
     background: backgroundLight,
-    borderRadius: '5px',
     margin: '20px 40px',
-    padding: '20px 10px 0px 10px',
+    padding: '0px 10px',
 };
 
 const buttonStyle = {
+    ...typographySubtitle,
     background: buttonNormal,
     border: 'none',
     borderRadius: '5px',
-    font: 'inherit',
+    height: '30px',
     marginBottom: '10px',
     marginLeft: '5%',
     width: '90%',
@@ -27,10 +27,10 @@ const buttonStyle = {
 
 const LoginPage = props =>
     <div style={style}>
+        <FormTabs />
         {props.showingLoginTab ?
             <LoginForm buttonStyle={buttonStyle} /> : <SignUpForm buttonStyle={buttonStyle} />
         }
-        <FormTabs />
     </div>;
 
 const mapStateToProps = state => ({
