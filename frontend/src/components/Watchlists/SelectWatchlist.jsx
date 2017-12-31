@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 
 import { selectWatchlistActionCreator } from '../../state/actions/watchlistActions';
@@ -6,7 +7,9 @@ import { selectWatchlistActionCreator } from '../../state/actions/watchlistActio
 
 const SelectWatchlist = props => {
     const handleSelect = e => {
-        props.selectWatchlist(parseInt(e.target.value, 10));
+        const selectedWatchlistId = parseInt(e.target.value, 10);
+        const selectedWatchlist = _.find(props.watchlists, { id: selectedWatchlistId });
+        props.selectWatchlist(selectedWatchlist);
     }
 
     return (

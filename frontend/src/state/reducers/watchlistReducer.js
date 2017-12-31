@@ -13,7 +13,7 @@ const INITIAL_STATE = {
     err: '',
     isFetching: false,
     watchlists: [],
-    selectedWatchlist: 0,
+    selectedWatchlist: {},
 };
 
 const watchlistReducer = (state = INITIAL_STATE, action) => {
