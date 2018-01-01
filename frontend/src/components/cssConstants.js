@@ -12,6 +12,11 @@ const typographyBody1 = {
     fontFamily: 'Raleway, sans-serif',
 };
 
+const typographyBody2 = {
+    ...typographyBody1,
+    fontSize: '0.875em',
+};
+
 const typographyTitle = {
     color: textNormal,
     fontFamily: 'Arvo, serif',
@@ -27,6 +32,6 @@ export {
     backgroundNormal, backgroundTitle, backgroundLight, backgroundFaint,
     buttonNormal,
     textNormal,
-    typographyBody1,
+    typographyBody1, typographyBody2,
     typographyTitle, typographySubtitle,
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import IconWrapper from '../IconWrapper';
+import { backgroundNormal } from '../cssConstants';
 import { toggleWatchlistsActionCreator } from '../../state/actions/uiActions';
 
 
@@ -29,8 +30,14 @@ const DownArrowIcon = () =>
     </IconWrapper>;
 
 
+const style = {
+    background: backgroundNormal,
+    display: 'inline-block',
+    height: '24px',
+};
+
 const ToggleWatchlistArrowIcon = props =>
-    <div onClick={props.toggleWatchlists}>
+    <div onClick={props.toggleWatchlists} style={style}>
         {props.expandedWatchlists ? <DownArrowIcon /> : <RightArrowIcon />}
     </div>;
 
