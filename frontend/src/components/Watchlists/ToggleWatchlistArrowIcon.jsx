@@ -34,6 +34,8 @@ const style = {
     background: backgroundNormal,
     display: 'inline-block',
     height: '24px',
+    position: 'absolute',
+    left: '200px',
 };
 
 const ToggleWatchlistArrowIcon = props =>

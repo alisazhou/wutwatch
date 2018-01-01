@@ -2,9 +2,30 @@ import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 
+import { backgroundLight, typographyBody2 } from '../cssConstants';
 import { selectWatchlistActionCreator } from '../../state/actions/watchlistActions';
 import { toggleWatchlistsActionCreator } from '../../state/actions/uiActions';
 
+
+const style = {
+    ...typographyBody2,
+    background: backgroundLight,
+    left: '20px',
+    maxHeight: '200px',
+    overflowY: 'scroll',
+    paddingLeft: '10px',
+    position: 'absolute',
+    top: '69px',
+    width: '170px',
+};
+
+const divStyle = {
+    height: '20px',
+    overflowX: 'hidden',
+    paddingTop: '4px',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+};
 
 const AllWatchlistsDropdown = props => {
     if (!props.expandedWatchlists) {
@@ -17,9 +38,11 @@ const AllWatchlistsDropdown = props => {
     };
 
     return (
-        <div>
+        <div style={style}>
             {_.map(props.watchlists, watchlist =>
-                <div key={watchlist.id} onClick={() => handleClick(watchlist)}>{watchlist.name}</div>
+                <div key={watchlist.id} onClick={() => handleClick(watchlist)} style={divStyle}>
+                    {watchlist.name}
+                </div>
             )}
         </div>
     );

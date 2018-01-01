@@ -17,9 +17,11 @@ const divStyle = {
     background: backgroundLight,
     display: 'inline-block',
     height: '20px',
+    overflowX: 'hidden',
     padding: '4px 0px 0px 10px',
-    position: 'relative',
-    top: '-7px',
+    position: 'absolute',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
     width: '170px',
 };
 
