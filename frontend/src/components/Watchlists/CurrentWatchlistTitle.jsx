@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import ToggleWatchlistArrowIcon from './ToggleWatchlistArrowIcon';
-import { backgroundLight, backgroundTitle, typographyBody2 } from '../cssConstants';
+import { background800, backgroundTitle, typographyBody2 } from '../cssConstants';
 
 
 const style = {
@@ -14,7 +14,7 @@ const style = {
 
 const divStyle = {
     ...typographyBody2,
-    background: backgroundLight,
+    background: background800,
     display: 'inline-block',
     height: '20px',
     overflowX: 'hidden',

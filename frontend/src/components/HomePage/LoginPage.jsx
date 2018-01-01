@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import FormTabs from '../Login/FormTabs';
 import LoginForm from '../Login/LoginForm';
 import SignUpForm from '../Login/SignUpForm';
-import { backgroundLight, buttonNormal, typographyBody1, typographySubtitle } from '../cssConstants';
+import { background800, buttonNormal, typographyBody1, typographySubtitle } from '../cssConstants';
 
 
 const style = {
     ...typographyBody1,
-    background: backgroundLight,
+    background: background800,
     margin: '20px 40px',
     padding: '0px 10px',
 };

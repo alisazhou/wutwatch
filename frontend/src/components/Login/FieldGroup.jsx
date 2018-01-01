@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-import { backgroundLight, textNormal } from '../cssConstants';
+import { background800, textNormal } from '../cssConstants';
 
 
 const style = {
@@ -10,7 +10,7 @@ const style = {
         marginBottom: '15px',
     },
     fieldStyle: {
-        background: backgroundLight,
+        background: background800,
         borderWidth: '0px 0px 2px 0px',
         color: 'inherit',
         float: 'right',

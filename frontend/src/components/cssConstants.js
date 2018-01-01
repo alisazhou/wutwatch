@@ -1,7 +1,7 @@
 const backgroundNormal = '#212121';
 const backgroundTitle = '#000000';
-const backgroundLight = '#424242';
-const backgroundFaint = '#757575';
+const background800 = '#424242';
+const background600 = '#757575';
 
 const buttonNormal = '#263238';
 
@@ -29,7 +29,7 @@ const typographySubtitle = {
 };
 
 export {
-    backgroundNormal, backgroundTitle, backgroundLight, backgroundFaint,
+    backgroundNormal, backgroundTitle, background800, background600,
     buttonNormal,
     textNormal,
     typographyBody1, typographyBody2,

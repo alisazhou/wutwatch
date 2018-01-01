@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { backgroundFaint, typographySubtitle } from '../cssConstants';
+import { background600, typographySubtitle } from '../cssConstants';
 import { showLoginTabActionCreator } from '../../state/actions/uiActions';
 
 
@@ -21,7 +21,7 @@ const tabStyle = {
 };
 
 const FormTabs = props => {
-    const faintTabStyle = { ...tabStyle, background: backgroundFaint };
+    const faintTabStyle = { ...tabStyle, background: background600 };
     const loginTabStyle = props.showingLoginTab ? tabStyle : faintTabStyle;
     const signUpTabStyle = props.showingLoginTab ? faintTabStyle : tabStyle;
 
