@@ -14,11 +14,11 @@ class AllWatchlistsDropdownItem extends React.Component {
 
     handleMouseEnter = () => {
         this.setState({ hovering: true });
-    }
+    };
 
     handleMouseLeave = () => {
         this.setState({ hovering: false });
-    }
+    };
 
     render() {
         const { watchlist } = this.props;

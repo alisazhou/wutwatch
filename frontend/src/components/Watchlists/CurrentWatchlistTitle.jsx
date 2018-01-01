@@ -5,13 +5,6 @@ import ToggleWatchlistArrowIcon from './ToggleWatchlistArrowIcon';
 import { background800, backgroundTitle, typographyBody2 } from '../cssConstants';
 
 
-const style = {
-    background: backgroundTitle,
-    height: '25px',
-    padding: '10px 20px',
-    width: '100%',
-};
-
 const divStyle = {
     ...typographyBody2,
     background: background800,
@@ -26,7 +19,7 @@ const divStyle = {
 };
 
 const CurrentWatchlistTitle = props =>
-    <div style={style}>
+    <div>
         <div style={divStyle}>{props.selectedWatchlist.name || 'all watchlists'}</div>
         <ToggleWatchlistArrowIcon />
     </div>;

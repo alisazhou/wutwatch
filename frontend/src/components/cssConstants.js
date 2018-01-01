@@ -6,6 +6,7 @@ const background600 = '#757575';
 const buttonNormal = '#263238';
 
 const textNormal = '#ffffff';
+const textDim = '#757575';
 
 const typographyBody1 = {
     color: textNormal,
@@ -15,6 +16,11 @@ const typographyBody1 = {
 const typographyBody2 = {
     ...typographyBody1,
     fontSize: '0.875em',
+};
+
+const typographyBody2Dim = {
+    ...typographyBody2,
+    color: textDim,
 };
 
 const typographyTitle = {
@@ -32,6 +38,6 @@ export {
     backgroundNormal, backgroundTitle, background800, background600,
     buttonNormal,
     textNormal,
-    typographyBody1, typographyBody2,
+    typographyBody1, typographyBody2, typographyBody2Dim,
     typographyTitle, typographySubtitle,
 };

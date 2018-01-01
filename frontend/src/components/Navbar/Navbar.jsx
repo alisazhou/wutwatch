@@ -7,14 +7,14 @@ import { backgroundTitle, typographyTitle } from '../cssConstants';
 
 const style = {...typographyTitle,
     background: backgroundTitle,
-    padding: '2px 8px',
+    padding: '2px 8px 0px 8px',
 };
 
 class Navbar extends React.Component {
     render() {
         return (
             <div style={style}>
-                wutwatch
+                w u t w a t c h
                 {this.props.isAuthenticated && <AccountCircleIcon />}
             </div>
         );

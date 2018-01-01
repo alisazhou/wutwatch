@@ -3,10 +3,8 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 
 import { loadWatchlistsActionCreator } from '../../state/actions/watchlistActions';
-import AddWatcherForm from './AddWatcherForm';
-import AddWatchlistForm from './AddWatchlistForm';
 import AllWatchlistsDropdown from './AllWatchlistsDropdown';
-import CurrentWatchlistTitle from './CurrentWatchlistTitle';
+import WatchlistBar from './WatchlistBar';
 
 
 class Watchlists extends React.Component {
@@ -18,10 +16,8 @@ class Watchlists extends React.Component {
     render() {
         return (
             <div>
-                <CurrentWatchlistTitle />
+                <WatchlistBar />
                 {this.props.expandedWatchlists && <AllWatchlistsDropdown />}
-                <AddWatchlistForm />
-                <AddWatcherForm />
             </div>
         );
     }

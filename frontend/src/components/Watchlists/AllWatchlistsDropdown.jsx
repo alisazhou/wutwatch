@@ -14,7 +14,7 @@ const style = {
     maxHeight: '200px',
     overflowY: 'scroll',
     position: 'absolute',
-    top: '69px',
+    top: '63px',
     width: '180px',
 };
 
