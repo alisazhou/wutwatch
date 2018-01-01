@@ -12,11 +12,6 @@ class AllWatchlistsDropdownItem extends React.Component {
         hovering: false,
     };
 
-    handleClick = watchlist => {
-        this.props.selectWatchlist(watchlist);
-        this.props.toggleWatchlists();
-    }
-
     handleMouseEnter = () => {
         this.setState({ hovering: true });
     }
@@ -38,7 +33,7 @@ class AllWatchlistsDropdownItem extends React.Component {
 
         return (
             <div
-                onClick={() => this.handleClick(watchlist)}
+                onClick={() => this.props.selectWatchlist(watchlist)}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
                 style={finalStyle}

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import AllWatchlistsDropdownItem from './AllWatchlistsDropdownItem';
 import { background800, backgroundNormal, typographyBody2 } from '../cssConstants';
+import { toggleWatchlistsActionCreator } from '../../state/actions/uiActions';
 
 
 const style = {
@@ -25,31 +26,42 @@ const divStyle = {
     whiteSpace: 'nowrap',
 };
 
-const AllWatchlistsDropdown = props => {
-    if (!props.expandedWatchlists) {
-        return null;
+class AllWatchlistsDropdown extends React.Component {
+    componentDidMount() {
+        window.addEventListener('click', this.props.toggleWatchlists);
     }
 
-    return (
-        <div style={style}>
-            <AllWatchlistsDropdownItem watchlist={{}} style={divStyle} />
-            {_.map(props.watchlists, watchlist =>
-                <AllWatchlistsDropdownItem
-                    key={watchlist.id}
-                    watchlist={watchlist}
-                    style={divStyle}
-                />
-            )}
-        </div>
-    );
+    componentWillUnmount() {
+        window.removeEventListener('click', this.props.toggleWatchlists);
+    }
+
+    render() {
+        return (
+            <div style={style}>
+                <AllWatchlistsDropdownItem watchlist={{}} style={divStyle} />
+                {_.map(this.props.watchlists, watchlist =>
+                    <AllWatchlistsDropdownItem
+                        key={watchlist.id}
+                        watchlist={watchlist}
+                        style={divStyle}
+                    />
+                )}
+            </div>
+        );
+    }
 }
 
 const mapStateToProps = state => ({
-    expandedWatchlists: state.ui.expandedWatchlists,
     watchlists: state.watchlists.watchlists,
 });
 
-const ConnectedDropdown = connect(mapStateToProps)(AllWatchlistsDropdown);
+const mapDispatchToProps = dispatch => ({
+    toggleWatchlists: () => {
+        dispatch(toggleWatchlistsActionCreator());
+    },
+});
+
+const ConnectedDropdown = connect(mapStateToProps, mapDispatchToProps)(AllWatchlistsDropdown);
 
 
 export default ConnectedDropdown;

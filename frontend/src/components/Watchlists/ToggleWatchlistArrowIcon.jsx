@@ -48,7 +48,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    toggleWatchlists: () => {
+    toggleWatchlists: e => {
+        e.stopPropagation(); // AllWatchListDropdown adds a window onClick listener on mount
         dispatch(toggleWatchlistsActionCreator());
     },
 });

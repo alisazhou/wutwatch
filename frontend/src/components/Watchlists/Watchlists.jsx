@@ -19,7 +19,7 @@ class Watchlists extends React.Component {
         return (
             <div>
                 <CurrentWatchlistTitle />
-                <AllWatchlistsDropdown />
+                {this.props.expandedWatchlists && <AllWatchlistsDropdown />}
                 <AddWatchlistForm />
                 <AddWatcherForm />
             </div>
@@ -28,6 +28,7 @@ class Watchlists extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    expandedWatchlists: state.ui.expandedWatchlists,
     watchlists: state.watchlists.watchlists,
 });
 
