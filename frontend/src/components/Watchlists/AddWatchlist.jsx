@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
+import AddWatchlistForm from './AddWatchlistForm';
 import AddWatchlistText from './AddWatchlistText';
 
 
@@ -11,7 +13,13 @@ const style = {
 
 const AddWatchlist = props =>
     <div style={style}>
-        <AddWatchlistText />
-    </div>
+        {props.addingWatchlist ? <AddWatchlistForm /> : <AddWatchlistText />}
+    </div>;
 
-export default AddWatchlist;
+const mapStateToProps = state => ({
+    addingWatchlist: state.ui.addingWatchlist,
+});
+
+const ConnectedAddWatchlist = connect(mapStateToProps)(AddWatchlist);
+
+export default ConnectedAddWatchlist;

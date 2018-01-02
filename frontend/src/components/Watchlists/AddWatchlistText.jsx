@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { typographyBody2Dim } from '../cssConstants';
+import { addingWatchlistActionCreator } from '../../state/actions/uiActions';
 
 
 const style = {
@@ -25,6 +27,7 @@ class AddWatchlistText extends React.Component {
     render() {
         return (
             <div
+                onClick={this.props.showAddWatchlistForm}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
                 style={style}
@@ -35,5 +38,12 @@ class AddWatchlistText extends React.Component {
     }
 }
 
+const mapDispatchToProps = dispatch => ({
+    showAddWatchlistForm: () => {
+        dispatch(addingWatchlistActionCreator(true));
+    },
+});
 
-export default AddWatchlistText;
+const ConnectedText = connect(undefined, mapDispatchToProps)(AddWatchlistText);
+
+export default ConnectedText;

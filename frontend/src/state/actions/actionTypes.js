@@ -42,5 +42,6 @@ export const ADD_WATCHER_SUCCESS = 'ADD_WATCHER_SUCCESS';
 export const SELECT_WATCHLIST = 'SELECT_WATCHLIST';
 
 // UI reducer action types
+export const ADDING_WATCHLIST = 'ADDING_WATCHLIST';  // entering new watchlist name
 export const SHOW_LOGIN_TAB = 'SHOW_LOGIN_TAB';  // LoginPage
 export const TOGGLE_WATCHLISTS = 'TOGGLE_WATCHLISTS';  // show dropdown with all watchlists

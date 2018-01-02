@@ -33,7 +33,7 @@ const watchlistReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 err: '',
                 isFetching: false,
-                watchlists: _.concat(state.watchlist, action.watchlist),
+                watchlists: _.concat(state.watchlists, action.watchlist),
             };
         case LOAD_WATCHLISTS_SUCCESS:
             return { ...state, err: '', isFetching: false, watchlists: action.watchlists };

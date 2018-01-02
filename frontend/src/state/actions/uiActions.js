@@ -1,5 +1,14 @@
-import { SHOW_LOGIN_TAB, TOGGLE_WATCHLISTS } from './actionTypes';
+import {
+    ADDING_WATCHLIST,
+    SHOW_LOGIN_TAB,
+    TOGGLE_WATCHLISTS,
+} from './actionTypes';
 
+
+const addingWatchlistActionCreator = addingWatchlist => ({
+    type: ADDING_WATCHLIST,
+    addingWatchlist,
+});
 
 const showLoginTabActionCreator = clickedLoginTab => ({
     type: SHOW_LOGIN_TAB,
@@ -11,5 +20,8 @@ const toggleWatchlistsActionCreator = () => ({
 });
 
 
-
-export { showLoginTabActionCreator, toggleWatchlistsActionCreator };
+export {
+    addingWatchlistActionCreator,
+    showLoginTabActionCreator,
+    toggleWatchlistsActionCreator,
+};
