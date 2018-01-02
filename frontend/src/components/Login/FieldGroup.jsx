@@ -12,10 +12,14 @@ const style = {
     fieldStyle: {
         background: background800,
         borderWidth: '0px 0px 2px 0px',
+        borderStyle: 'dotted',
         color: 'inherit',
         float: 'right',
         font: 'inherit',
+        fontStyle: 'italic',
         height: '12px',
+        outline: 'none',
+        paddingLeft: '5px',
     },
 };
 
@@ -27,6 +31,7 @@ const FieldGroup = props =>
             type={props.fieldType}
             name={props.fieldName}
             style={style.fieldStyle}
+            {...props.passthruProps}
         />
     </div>;
 

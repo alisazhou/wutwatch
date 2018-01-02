@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { formValueSelector } from 'redux-form';
 
 import FormTabs from '../Login/FormTabs';
 import LoginForm from '../Login/LoginForm';
@@ -29,7 +30,8 @@ const LoginPage = props =>
     <div style={style}>
         <FormTabs />
         {props.showingLoginTab ?
-            <LoginForm buttonStyle={buttonStyle} /> : <SignUpForm buttonStyle={buttonStyle} />
+            <LoginForm buttonStyle={buttonStyle} /> :
+            <SignUpForm buttonStyle={buttonStyle} />
         }
     </div>;
 

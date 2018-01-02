@@ -9,6 +9,7 @@ const style = {
     position: 'relative',
     left: '215px',
     top: '4px',
+    width: 'fit-content',
 };
 
 const AddWatchlist = props =>

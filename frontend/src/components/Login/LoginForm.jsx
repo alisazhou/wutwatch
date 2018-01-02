@@ -1,17 +1,44 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+import { Field, formValueSelector, reduxForm } from 'redux-form';
 
 import FieldGroup from './FieldGroup';
 import { loginUserAction } from '../../state/actions/authActions';
 
 
-const LoginForm = props =>
-    <form onSubmit={props.handleSubmit(props.loginUser)}>
-        <FieldGroup label="email:" fieldComponent="input" fieldType="text" fieldName="username" />
-        <FieldGroup label="password:" fieldComponent="input" fieldType="password" fieldName="password" />
-        <button type='submit' style={props.buttonStyle}>Login</button>
-    </form>;
+class LoginForm extends React.Component {
+    componentDidMount() {
+        this.props.change('username', this.props.enteredUsername);
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.props.handleSubmit(this.props.loginUser)}>
+                <FieldGroup
+                    label="email:"
+                    fieldComponent="input"
+                    fieldType="text"
+                    fieldName="username"
+                    passthruProps={{ autoFocus: true }}
+                />
+                <FieldGroup
+                    label="password:"
+                    fieldComponent="input"
+                    fieldType="password"
+                    fieldName="password"
+                />
+                <button type='submit' style={this.props.buttonStyle}>Login</button>
+            </form>
+        );
+    }
+}
+
+const mapStateToProps = state => {
+    const createUserSelector = formValueSelector('createUser');
+    const enteredUsername = createUserSelector(state, 'email');
+
+    return { enteredUsername };
+};
 
 const mapDispatchToProps = dispatch => ({
     loginUser: creds => {
@@ -19,10 +46,11 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-const ConnectedForm = connect(undefined, mapDispatchToProps)(LoginForm);
+const ConnectedForm = connect(mapStateToProps, mapDispatchToProps)(LoginForm);
 
 const WrappedForm = reduxForm({
-    form: 'loginUser'
+    form: 'loginUser',
+    destroyOnUnmount: false,
 })(ConnectedForm);
 
 export default WrappedForm;
