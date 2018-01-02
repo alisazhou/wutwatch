@@ -15,13 +15,17 @@ const inputStyle = {
     borderBottomColor: background800,
     fontStyle: 'italic',
     outline: 'none',
+    position: 'relative',
+    left: '215px',
+    top: '4px',
+    width: 'fit-content',
 };
 
 const AddWatchlistForm = props => (
     <form onSubmit={props.handleSubmit(props.createWatchlist)}>
         <Field component="input" type="text" name="name"
             onBlur={props.hideAddWatchlistForm}
-            autoFocus
+            placeholder='add new list...'
             style={inputStyle}
         />
     </form>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import CurrentWatchlistTitle from './CurrentWatchlistTitle';
-import AddWatchlist from './AddWatchlist';
+import AddWatchlistForm from './AddWatchlistForm';
 import { backgroundTitle } from '../cssConstants';
 
 
@@ -16,7 +16,7 @@ const style = {
 const WatchlistBar = props =>
     <div style={style}>
         <CurrentWatchlistTitle />
-        <AddWatchlist />
+        <AddWatchlistForm />
     </div>;
 
 export default WatchlistBar;
