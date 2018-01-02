@@ -7,7 +7,8 @@ import { backgroundTitle } from '../cssConstants';
 
 const style = {
     background: backgroundTitle,
-    height: '25px',
+    boxSizing: 'border-box',
+    height: '45px',
     padding: '6px 20px 10px',
     width: '100%',
 };
