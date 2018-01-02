@@ -33,7 +33,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    toggleDropdown: () => {
+    toggleDropdown: e => {
+        e.stopPropagation();
         dispatch(toggleAccountDropdownActionCreator());
     },
 });

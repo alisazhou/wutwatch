@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import AccountDropdownItem from './AccountDropdownItem';
 import { buttonLight, typographyBody1OnLight } from '../cssConstants';
+import { toggleAccountDropdownActionCreator } from '../../state/actions/uiActions';
 
 
 const style = {
@@ -19,10 +21,31 @@ const itemStyle = {
     padding: '5px 0px 5px 10px',
 };
 
-const AccountDropdown = props =>
-    <div style={style}>
-        <AccountDropdownItem style={itemStyle} content='edit watchlists' />
-        <AccountDropdownItem style={itemStyle} content='log out' />
-    </div>;
+class AccountDropdown extends React.Component {
+    componentDidMount() {
+        window.addEventListener('click', this.props.toggleAccountDropdown);
+    }
 
-export default AccountDropdown;
+    componentWillUnmount() {
+        window.removeEventListener('click', this.props.toggleAccountDropdown);
+    }
+
+    render() {
+        return (
+            <div style={style}>
+                <AccountDropdownItem style={itemStyle} content='edit watchlists' />
+                <AccountDropdownItem style={itemStyle} content='log out' />
+            </div>
+        );
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    toggleAccountDropdown: () => {
+        dispatch(toggleAccountDropdownActionCreator());
+    },
+});
+
+const ConnectedDropdown = connect(undefined, mapDispatchToProps)(AccountDropdown);
+
+export default ConnectedDropdown;
