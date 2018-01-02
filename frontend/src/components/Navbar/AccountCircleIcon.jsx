@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { textNormal } from '../cssConstants';
+import { buttonLight, textNormal } from '../cssConstants';
 import IconWrapper from '../IconWrapper';
 import { toggleAccountDropdownActionCreator } from '../../state/actions/uiActions';
 
@@ -19,15 +19,18 @@ const style = {
 };
 
 const AccountCircleIcon = props => {
-    const normalFill = textNormal;
+    const fill = props.expandedAccountDropdown ? buttonLight : textNormal;
 
-    // TODO: change fill on hover
     return (
         <IconWrapper onClick={props.toggleDropdown} style={style}>
-            <AccountCircleSvg fill={normalFill} />
+            <AccountCircleSvg fill={fill} />
         </IconWrapper>
     )
 };
+
+const mapStateToProps = state => ({
+    expandedAccountDropdown: state.ui.expandedAccountDropdown,
+});
 
 const mapDispatchToProps = dispatch => ({
     toggleDropdown: () => {
@@ -35,6 +38,6 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-const ConnectedIcon = connect(undefined, mapDispatchToProps)(AccountCircleIcon);
+const ConnectedIcon = connect(mapStateToProps, mapDispatchToProps)(AccountCircleIcon);
 
 export default ConnectedIcon;

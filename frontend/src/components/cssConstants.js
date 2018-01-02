@@ -4,13 +4,20 @@ const background800 = '#424242';
 const background600 = '#757575';
 
 const buttonNormal = '#263238';
+const buttonLight = '#B0BEC5';
 
 const textNormal = '#ffffff';
 const textDim = '#757575';
+const textOnLight = '#000000';
 
 const typographyBody1 = {
     color: textNormal,
     fontFamily: 'Raleway, sans-serif',
+};
+
+const typographyBody1OnLight = {
+    ...typographyBody1,
+    color: textOnLight,
 };
 
 const typographyBody2 = {
@@ -36,8 +43,9 @@ const typographySubtitle = {
 
 export {
     backgroundNormal, backgroundTitle, background800, background600,
-    buttonNormal,
+    buttonNormal, buttonLight,
     textNormal,
-    typographyBody1, typographyBody2, typographyBody2Dim,
+    typographyBody1, typographyBody1OnLight,
+    typographyBody2, typographyBody2Dim,
     typographyTitle, typographySubtitle,
 };

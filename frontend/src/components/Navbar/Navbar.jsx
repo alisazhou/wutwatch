@@ -6,7 +6,7 @@ import AccountDropdown from './AccountDropdown';
 import { backgroundTitle, typographyTitle } from '../cssConstants';
 
 
-const style = {...typographyTitle,
+const style = {
     background: backgroundTitle,
     padding: '2px 8px 0px 8px',
 };
@@ -16,7 +16,7 @@ class Navbar extends React.Component {
     render() {
         return (
             <div style={style}>
-                w u t w a t c h
+                <span style={{...typographyTitle}}>w u t w a t c h</span>
                 {this.props.isAuthenticated && <AccountCircleIcon />}
                 {this.props.expandedAccountDropdown && <AccountDropdown />}
             </div>
