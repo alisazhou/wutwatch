@@ -1,5 +1,6 @@
 import React from 'react';
 
+import AccountDropdownItem from './AccountDropdownItem';
 import { buttonLight, typographyBody1OnLight } from '../cssConstants';
 
 
@@ -13,15 +14,15 @@ const style = {
     zIndex: 1,
 };
 
-const divStyle = {
+const itemStyle = {
+    ...typographyBody1OnLight,
     padding: '5px 0px 5px 10px',
 };
 
 const AccountDropdown = props =>
     <div style={style}>
-        <div style={divStyle}><span style={{...typographyBody1OnLight}}>edit watchlists</span></div>
-        <div style={divStyle}><span style={{...typographyBody1OnLight}}>log out</span></div>
-    </div>
-
+        <AccountDropdownItem style={itemStyle} content='edit watchlists' />
+        <AccountDropdownItem style={itemStyle} content='log out' />
+    </div>;
 
 export default AccountDropdown;

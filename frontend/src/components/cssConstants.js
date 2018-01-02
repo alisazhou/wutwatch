@@ -4,6 +4,7 @@ const background800 = '#424242';
 const background600 = '#757575';
 
 const buttonNormal = '#263238';
+const buttonMedium = '#90A4AE';
 const buttonLight = '#B0BEC5';
 
 const textNormal = '#ffffff';
@@ -43,7 +44,7 @@ const typographySubtitle = {
 
 export {
     backgroundNormal, backgroundTitle, background800, background600,
-    buttonNormal, buttonLight,
+    buttonNormal, buttonMedium, buttonLight,
     textNormal,
     typographyBody1, typographyBody1OnLight,
     typographyBody2, typographyBody2Dim,

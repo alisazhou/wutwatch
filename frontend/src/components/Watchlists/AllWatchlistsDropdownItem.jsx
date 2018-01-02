@@ -3,23 +3,13 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 
 import { background600 } from '../cssConstants';
+import withHover from '../withHover';
 import { selectWatchlistActionCreator } from '../../state/actions/watchlistActions';
 import { toggleWatchlistsActionCreator } from '../../state/actions/uiActions';
 
 
+// TODO: make this a function
 class AllWatchlistsDropdownItem extends React.Component {
-    state = {
-        hovering: false,
-    };
-
-    handleMouseEnter = () => {
-        this.setState({ hovering: true });
-    };
-
-    handleMouseLeave = () => {
-        this.setState({ hovering: false });
-    };
-
     render() {
         const { watchlist } = this.props;
 
@@ -27,15 +17,13 @@ class AllWatchlistsDropdownItem extends React.Component {
         if (_.isEqual(watchlist, this.props.selectedWatchlist)) {
             finalStyle.fontStyle = 'italic';
         }
-        if (this.state.hovering) {
+        if (this.props.hovering) {
             finalStyle.background = background600;
         }
 
         return (
             <div
                 onClick={() => this.props.selectWatchlist(watchlist)}
-                onMouseEnter={this.handleMouseEnter}
-                onMouseLeave={this.handleMouseLeave}
                 style={finalStyle}
             >
                 {watchlist.name || 'all watchlists'}
@@ -59,4 +47,6 @@ const mapDispatchToProps = dispatch => ({
 
 const ConnectedItem = connect(mapStateToProps, mapDispatchToProps)(AllWatchlistsDropdownItem);
 
-export default ConnectedItem;
+const WrappedItem = withHover(ConnectedItem);
+
+export default WrappedItem;
