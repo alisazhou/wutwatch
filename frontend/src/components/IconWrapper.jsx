@@ -13,7 +13,7 @@ const IconWrapper = props => {
     };
 
     return (
-        <div style={style}>
+        <div onClick={props.onClick} style={style}>
             {props.children}
         </div>
     );

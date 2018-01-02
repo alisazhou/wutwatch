@@ -1,6 +1,7 @@
 import {
     ADDING_WATCHLIST,
     SHOW_LOGIN_TAB,
+    TOGGLE_ACCOUNT_DROPDOWN,
     TOGGLE_WATCHLISTS,
 } from './actionTypes';
 
@@ -15,6 +16,10 @@ const showLoginTabActionCreator = clickedLoginTab => ({
     clickedLoginTab,
 });
 
+const toggleAccountDropdownActionCreator = () => ({
+    type: TOGGLE_ACCOUNT_DROPDOWN,
+});
+
 const toggleWatchlistsActionCreator = () => ({
     type: TOGGLE_WATCHLISTS,
 });
@@ -23,5 +28,6 @@ const toggleWatchlistsActionCreator = () => ({
 export {
     addingWatchlistActionCreator,
     showLoginTabActionCreator,
+    toggleAccountDropdownActionCreator,
     toggleWatchlistsActionCreator,
 };
