@@ -13,9 +13,13 @@ class PickMovieButton extends React.Component {
 
     handlePickMovie = () => {
         const selectedMovie = _.sample(this.props.movies);
-        this.props.selectMovie(selectedMovie);
-        localStorage.setItem('lastPickedAt', moment().format());
-        this.setState({ lastPickedAt: moment(localStorage.getItem('lastPickedAt')) });
+        this.props.selectMovie(selectedMovie || {});
+
+        if (selectedMovie) {
+            // movies could be an empty array if watchlist has no movies
+            localStorage.setItem('lastPickedAt', moment().format());
+            this.setState({ lastPickedAt: moment(localStorage.getItem('lastPickedAt')) });
+        }
     }
 
     render() {
