@@ -1,11 +1,10 @@
 from rest_framework import permissions, status, viewsets
-from rest_framework.decorators import detail_route
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework.response import Response
 
-from movies.models import Movie
 from profiles.models import Profile
-from .models import WatchList
-from .serializers import WatchListSerializer
+from .models import WatchHistory, WatchList
+from .serializers import WatchHistorySerializer, WatchListSerializer
 
 
 class IsSharedWatchlist(permissions.BasePermission):
@@ -13,7 +12,11 @@ class IsSharedWatchlist(permissions.BasePermission):
         return request.user.profile in Profile.objects.filter(watchlists=obj)
 
 
-class WatchListViewSet(viewsets.ModelViewSet):
+class WatchListViewSet(CreateModelMixin,
+                       ListModelMixin,
+                       RetrieveModelMixin,
+                       UpdateModelMixin,
+                       viewsets.GenericViewSet):
     permission_classes = (permissions.IsAuthenticated, IsSharedWatchlist,)
     serializer_class = WatchListSerializer
 
@@ -48,17 +51,31 @@ class WatchListViewSet(viewsets.ModelViewSet):
 
         return Response(self.get_serializer(instance).data)
 
-    @detail_route(methods=['post'], url_path='remove-movie')
-    def remove_movie(self, request, pk=None):
-        watchlist = WatchList.objects.get(id=pk)
-        try:
-            movie = Movie.objects.get(id=request.data.get('movie'))
-        except (KeyError, Movie.DoesNotExist):
-            data = {'movie': 'Need a valid movie id to be removed from this watchlist'}
-            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
-        watchlist.movies.remove(movie)
+class IsSharedWatchHistory(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return request.user.profile in Profile.objects.filter(watchlists=obj.watchlist)
 
-        response = Response(self.get_serializer(watchlist).data)
+
+class WatchHistoryViewSet(ListModelMixin,
+                          RetrieveModelMixin,
+                          UpdateModelMixin,
+                          DestroyModelMixin,
+                          viewsets.GenericViewSet):
+    permission_classes = (permissions.IsAuthenticated, IsSharedWatchHistory,)
+    serializer_class = WatchHistorySerializer
+
+    def get_queryset(self):
+        return WatchHistory.objects.filter(watchlist__watchers__user=self.request.user)
+
+    def update(self, request, *args, **kwargs):
+        fields_to_update = request.data.keys()
+        for field_name in ('movie', 'watchlist', 'date_added'):
+            if field_name in fields_to_update:
+                return Response(
+                    data={'error': 'Can only update date_watched for the watch history'},
+                    status=status.HTTP_400_BAD_REQUEST)
+
+        response = super().update(request, *args, **kwargs)
 
         return response

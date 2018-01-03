@@ -3,10 +3,11 @@ import os
 import requests
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import api_view
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 
 from profiles.models import Profile
-from watchlists.models import WatchList
+from watchlists.models import WatchHistory, WatchList
 from .models import Movie
 from .serializers import MovieSerializer
 
@@ -16,7 +17,10 @@ class IsInSharedWatchlist(permissions.BasePermission):
         return request.user.profile in Profile.objects.filter(watchlists__movies=obj)
 
 
-class MovieViewSet(viewsets.ModelViewSet):
+class MovieViewSet(CreateModelMixin,
+                   ListModelMixin,
+                   RetrieveModelMixin,
+                   viewsets.GenericViewSet):
     permission_classes = (permissions.IsAuthenticated, IsInSharedWatchlist,)
     serializer_class = MovieSerializer
 
@@ -26,29 +30,41 @@ class MovieViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         try:
             watchlist_id = request.data['watchlist']
-        except KeyError:
+            watchlist = WatchList.objects.get(id=watchlist_id)
+        except (KeyError, WatchList.DoesNotExist):
             return Response(
-                data={'error': 'Need a watchlist for the movie'},
+                data={'error': 'Need a valid watchlist for the movie'},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+        # movie has been previously added
         try:
-            watchlist = WatchList.objects.get(id=watchlist_id)
-        except WatchList.DoesNotExist:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            movie = Movie.objects.get(moviedb_id=request.data.get('moviedb_id'))
+            response = Response(self.get_serializer(movie).data, status=status.HTTP_200_OK)
+        # movie is not in DB
+        except Movie.DoesNotExist:
+            response = super().create(request, *args, **kwargs)
+            movie = Movie.objects.get(id=response.data['id'])
 
-        # if adding from moviedb, check if movie has already been saved
-        moviedb_id = request.data.get('moviedb_id')
-        if moviedb_id:
-            try:
-                existing_movie = Movie.objects.get(moviedb_id=moviedb_id)
-                watchlist.movies.add(existing_movie.id)
-                response = Response(self.get_serializer(existing_movie).data, status=status.HTTP_200_OK)
-            except Movie.DoesNotExist:
-                # create the Movie instance, and add it to the designated WatchList
-                response = super().create(request, *args, **kwargs)
-                watchlist.movies.add(response.data['id'])
-                response.data['watchlists'] = [watchlist.id]
+        watchhistory, _ = WatchHistory.objects.get_or_create(movie=movie, watchlist=watchlist)
+        print(response)
+
+        # moviedb_id = request.data.get('moviedb_id')
+        # if moviedb_id:
+        #     # if adding from moviedb, check if movie has already been saved
+        #     try:
+        #         movie = Movie.objects.get(moviedb_id=moviedb_id)
+        #     except Movie.DoesNotExist:
+        #         response = super().create(request, *args, **kwargs)
+        # else:
+        #     # if manual add, simply create
+        #     response = super().create(request, *args, **kwargs)
+
+        # # associate movie with watchlist, first check if already in watchlist
+        #         watchlist.movies.add(existing_movie.id)
+        #         # create the Movie instance, and add it to the designated WatchList
+        #         watchlist.movies.add(response.data['id'])
+        #         response.data['watchlists'] = [watchlist.id]
 
         return response
 

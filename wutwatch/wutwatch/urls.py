@@ -6,12 +6,13 @@ from rest_framework.routers import DefaultRouter
 
 from movies.views import MovieViewSet, search_movie
 from profiles.views import ProfileViewSet
-from watchlists.views import WatchListViewSet
+from watchlists.views import WatchHistoryViewSet, WatchListViewSet
 
 
 router = DefaultRouter()
 router.register(r'movies', MovieViewSet, 'movie')
 router.register(r'profiles', ProfileViewSet, 'profile')
+router.register(r'watchhistories', WatchHistoryViewSet, base_name='watchhistory')
 router.register(r'watchlists', WatchListViewSet, 'watchlist')
 
 
