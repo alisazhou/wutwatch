@@ -6,6 +6,7 @@ import { loadMoviesActionCreator } from '../../state/actions/movieActions';
 import AddMovieForm from './AddMovieForm';
 import PickMovieButton from './PickMovieButton';
 import SearchMovieForm from './SearchMovieForm';
+import MoviesList from './MoviesList';
 
 
 class Movies extends React.Component {
@@ -24,13 +25,7 @@ class Movies extends React.Component {
             _.includes(movie.watchlists, this.props.selectedWatchlist.id)
         );
     }
-    get moviesList() {
-        return (
-            <ul>
-                {_.map(this.movies, movie => <li key={movie.id}>{movie.name}</li>)}
-            </ul>
-        );
-    }
+
     get searchedMovie() {
         if (_.isEmpty(this.props.searchedMovie)) {
             return null;
@@ -52,7 +47,7 @@ class Movies extends React.Component {
                     <SearchMovieForm />
                     {this.searchedMovie}
                 </div>) : null}
-                {this.moviesList}
+                <MoviesList movies={this.movies} />
             </div>
         );
     }
