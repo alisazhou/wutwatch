@@ -47,24 +47,8 @@ class MovieViewSet(CreateModelMixin,
             movie = Movie.objects.get(id=response.data['id'])
 
         watchhistory, _ = WatchHistory.objects.get_or_create(movie=movie, watchlist=watchlist)
-        print(response)
-
-        # moviedb_id = request.data.get('moviedb_id')
-        # if moviedb_id:
-        #     # if adding from moviedb, check if movie has already been saved
-        #     try:
-        #         movie = Movie.objects.get(moviedb_id=moviedb_id)
-        #     except Movie.DoesNotExist:
-        #         response = super().create(request, *args, **kwargs)
-        # else:
-        #     # if manual add, simply create
-        #     response = super().create(request, *args, **kwargs)
-
-        # # associate movie with watchlist, first check if already in watchlist
-        #         watchlist.movies.add(existing_movie.id)
-        #         # create the Movie instance, and add it to the designated WatchList
-        #         watchlist.movies.add(response.data['id'])
-        #         response.data['watchlists'] = [watchlist.id]
+        if watchlist_id not in response.data['watchlists']:
+            response.data['watchlists'].append(watchlist_id)
 
         return response
 
