@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 
 import { loadMoviesActionCreator } from '../../state/actions/movieActions';
 import AddMovieForm from './AddMovieForm';
+import MoviesList from './MoviesList';
 import PickMovieButton from './PickMovieButton';
 import SearchMovieForm from './SearchMovieForm';
-import MoviesList from './MoviesList';
+import SearchedMovieResult from './SearchedMovieResult';
 
 
 class Movies extends React.Component {
@@ -40,11 +41,16 @@ class Movies extends React.Component {
         );
     }
     render() {
+        const { searchedMovie, selectedWatchlist } = this.props;
+
         return (
             <div>
-                {!_.isEmpty(this.props.selectedWatchlist) && <SearchMovieForm />}
-                <MoviesList movies={this.movies} />
-                {!_.isEmpty(this.props.selectedWatchlist) && <PickMovieButton movies={this.movies} />}
+                {!_.isEmpty(selectedWatchlist) && _.isEmpty(searchedMovie) && <SearchMovieForm />}
+                {_.isEmpty(searchedMovie) ?
+                    <MoviesList movies={this.movies} /> :
+                    <SearchedMovieResult movie={searchedMovie} />
+                }
+                {!_.isEmpty(selectedWatchlist) && <PickMovieButton movies={this.movies} />}
             </div>
         );
     }

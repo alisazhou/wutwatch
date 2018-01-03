@@ -16,7 +16,7 @@ class Watchlists extends React.Component {
     render() {
         return (
             <div>
-                <WatchlistBar />
+                {_.isEmpty(this.props.searchedMovie) && <WatchlistBar />}
                 {this.props.expandedWatchlists && <AllWatchlistsDropdown />}
             </div>
         );
@@ -25,6 +25,7 @@ class Watchlists extends React.Component {
 
 const mapStateToProps = state => ({
     expandedWatchlists: state.ui.expandedWatchlists,
+    searchedMovie: state.movies.searchedMovie,
     watchlists: state.watchlists.watchlists,
 });
 

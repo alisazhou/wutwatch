@@ -52,12 +52,18 @@ def search_movie(request, *args, **kwargs):
     moviedb_response = requests.get(search_url, params=params)
     # TODO: check if response is okay, else return error
     parsed_response = json.loads(moviedb_response.text)
-    result = parsed_response['results'][0]
-    movie_info = {
-        'name': result['title'],
-        'moviedb_id': result['id'],
-        'poster_url': 'https://image.tmdb.org/t/p/w300{}'.format(result['poster_path']),
-        'release_date': result['release_date'],
-    }
+    try:
+        result = parsed_response['results'][0]
+        movie_info = {
+            'found': True,
+            'name': result['title'],
+            'moviedb_id': result['id'],
+            'poster_url': 'https://image.tmdb.org/t/p/w300{}'.format(result['poster_path']),
+            'release_date': result['release_date'],
+        }
+    except IndexError:
+        movie_info = {
+            'found': False,
+        }
 
     return Response(movie_info, status=status.HTTP_200_OK)
