@@ -24,6 +24,8 @@ export const SEARCH_MOVIE_FAILURE = 'SEARCH_MOVIES_FAILURE';
 export const SEARCH_MOVIE_REQUEST = 'SEARCH_MOVIES_REQUEST';
 export const SEARCH_MOVIE_SUCCESS = 'SEARCH_MOVIES_SUCCESS';
 
+export const CLEAR_SEARCHED_MOVIE = 'CLEAR_SEARCHED_MOVIE';
+
 export const SELECT_MOVIE = 'SELECT_MOVIE';
 
 // watchlist reducer action types

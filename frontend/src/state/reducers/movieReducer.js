@@ -4,7 +4,7 @@ import {
     CREATE_MOVIE_FAILURE, CREATE_MOVIE_REQUEST, CREATE_MOVIE_SUCCESS,
     LOAD_MOVIES_FAILURE, LOAD_MOVIES_REQUEST, LOAD_MOVIES_SUCCESS,
     SEARCH_MOVIE_FAILURE, SEARCH_MOVIE_REQUEST, SEARCH_MOVIE_SUCCESS,
-    SELECT_MOVIE,
+    CLEAR_SEARCHED_MOVIE, SELECT_MOVIE,
 } from '../actions/actionTypes';
 
 
@@ -37,6 +37,8 @@ const movieReducer = (state = INITIAL_STATE, action) => {
             return { ...state, err: '', isFetching: false, movies: action.movies };
         case SEARCH_MOVIE_SUCCESS:
             return { ...state, err: '', isFetching: false, searchedMovie: action.movie };
+        case CLEAR_SEARCHED_MOVIE:
+            return { ...state, searchedMovie: {} };
         case SELECT_MOVIE:
             return { ...state, selectedMovie: action.selectedMovie };
     }
