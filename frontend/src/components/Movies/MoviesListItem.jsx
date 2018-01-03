@@ -10,16 +10,19 @@ const style = {
     textAlign: 'center',
 };
 
+const divStyle = {
+    width: '160px',
+}
+
 const imgStyle = {
-    height: '250px',
     paddingTop: '15px',
-    width: '150px',
+    width: '160px',
 };
 
 const MoviesListItem = props =>
     <div style={style}>
         <img src={props.poster_url || '/static/no-image.jpg'} style={imgStyle} />
-        <div>{props.name}</div>
+        <div style={divStyle}>{props.name}</div>
         <div>{moment(props.release_date).year() || null}</div>
     </div>;
 

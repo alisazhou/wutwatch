@@ -6,7 +6,8 @@ import MoviesListItem from './MoviesListItem';
 const style = {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+    padding: '0px 15px',
 };
 
 // TODO: odd number of movies, style need to align left
