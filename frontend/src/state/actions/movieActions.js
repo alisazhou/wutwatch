@@ -73,10 +73,8 @@ const loadMoviesActionCreator = () => {
         return fetch(`http://${window.location.host}/api/movies/`, config)
             .then(response => response.ok ? response.json() : Promise.reject(response.text()))
             .then(json => {
-                console.log(json);
                 dispatch(loadMoviesSuccessActionCreator(json));
             }).catch(err => {
-                console.log(err);
                 dispatch(loadMoviesFailureActionCreator(err));
             });
     };

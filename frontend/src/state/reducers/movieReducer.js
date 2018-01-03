@@ -31,7 +31,7 @@ const movieReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 err: '',
                 isFetching: false,
-                movies: _.concat(state.movies, action.movie),
+                movies: _.unionBy([action.movie], state.movies, 'id'),
             };
         case LOAD_MOVIES_SUCCESS:
             return { ...state, err: '', isFetching: false, movies: action.movies };

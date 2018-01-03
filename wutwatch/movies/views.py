@@ -21,7 +21,7 @@ class MovieViewSet(viewsets.ModelViewSet):
     serializer_class = MovieSerializer
 
     def get_queryset(self):
-        return Movie.objects.filter(watchlists__watchers=self.request.user.profile)
+        return Movie.objects.filter(watchlists__watchers=self.request.user.profile).distinct()
 
     def create(self, request, *args, **kwargs):
         try:
@@ -37,11 +37,18 @@ class MovieViewSet(viewsets.ModelViewSet):
         except WatchList.DoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        # create the Movie instance, and add it to the designated WatchList
-        response = super().create(request, *args, **kwargs)
-        watchlist.movies.add(response.data['id'])
-        watchlist.save()
-        response.data['watchlists'] = [watchlist.id]
+        # if adding from moviedb, check if movie has already been saved
+        moviedb_id = request.data.get('moviedb_id')
+        if moviedb_id:
+            try:
+                existing_movie = Movie.objects.get(moviedb_id=moviedb_id)
+                watchlist.movies.add(existing_movie.id)
+                response = Response(self.get_serializer(existing_movie).data, status=status.HTTP_200_OK)
+            except Movie.DoesNotExist:
+                # create the Movie instance, and add it to the designated WatchList
+                response = super().create(request, *args, **kwargs)
+                watchlist.movies.add(response.data['id'])
+                response.data['watchlists'] = [watchlist.id]
 
         return response
 

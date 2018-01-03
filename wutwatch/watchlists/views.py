@@ -28,7 +28,6 @@ class WatchListViewSet(viewsets.ModelViewSet):
         # associate the new watchlist with the current user
         user_profile = Profile.objects.get(user=request.user)
         new_watchlist.watchers.add(user_profile)
-        new_watchlist.save()
 
         # TODO: can just update response.data['watchers']
         response = Response(self.get_serializer(new_watchlist).data, status=status.HTTP_201_CREATED)
