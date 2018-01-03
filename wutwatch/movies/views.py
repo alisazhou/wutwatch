@@ -27,7 +27,10 @@ class MovieViewSet(viewsets.ModelViewSet):
         try:
             watchlist_id = request.data['watchlist']
         except KeyError:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                data={'error': 'Need a watchlist for the movie'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         try:
             watchlist = WatchList.objects.get(id=watchlist_id)
