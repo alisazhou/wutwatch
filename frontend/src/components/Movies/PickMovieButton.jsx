@@ -3,8 +3,21 @@ import _ from 'lodash';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
+import { buttonMedium, typographyTitleOnLight } from '../cssConstants';
 import { selectMovieActionCreator } from '../../state/actions/movieActions';
 
+
+const style = {
+    ...typographyTitleOnLight,
+    background: buttonMedium,
+    bottom: '5px',
+    border: 'none',
+    borderRadius: '5px',
+    marginLeft: '5%',
+    position: 'fixed',
+    textAlign: 'center',
+    width: '90%',
+};
 
 class PickMovieButton extends React.Component {
     state = {
@@ -28,9 +41,9 @@ class PickMovieButton extends React.Component {
             return (<div>Please watch the movie first before picking another one</div>);
         }
         return (
-            <button onClick={this.handlePickMovie}>
+            <div onClick={this.handlePickMovie} style={style}>
                 Pick a movie for me!
-            </button>
+            </div>
         );
     }
 }

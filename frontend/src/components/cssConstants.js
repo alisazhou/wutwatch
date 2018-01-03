@@ -37,6 +37,11 @@ const typographyTitle = {
     fontSize: '1.5em',
 };
 
+const typographyTitleOnLight = {
+    ...typographyTitle,
+    color: textOnLight,
+};
+
 const typographySubtitle = {
     ...typographyTitle,
     fontSize: '1em',
@@ -48,5 +53,6 @@ export {
     textNormal,
     typographyBody1, typographyBody1OnLight,
     typographyBody2, typographyBody2Dim,
-    typographyTitle, typographySubtitle,
+    typographyTitle, typographyTitleOnLight,
+    typographySubtitle,
 };
