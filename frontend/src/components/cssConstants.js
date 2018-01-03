@@ -14,6 +14,7 @@ const textOnLight = '#000000';
 const typographyBody1 = {
     color: textNormal,
     fontFamily: 'Raleway, sans-serif',
+    fontSize: '1em',
 };
 
 const typographyBody1OnLight = {

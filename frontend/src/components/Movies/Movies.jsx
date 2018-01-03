@@ -42,11 +42,7 @@ class Movies extends React.Component {
     render() {
         return (
             <div>
-                {!_.isEmpty(this.props.selectedWatchlist) ? (<div>
-                    <AddMovieForm />
-                    <SearchMovieForm />
-                    {this.searchedMovie}
-                </div>) : null}
+                {!_.isEmpty(this.props.selectedWatchlist) && <SearchMovieForm />}
                 <MoviesList movies={this.movies} />
                 {!_.isEmpty(this.props.selectedWatchlist) && <PickMovieButton movies={this.movies} />}
             </div>

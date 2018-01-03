@@ -42,7 +42,7 @@ class PickMovieButton extends React.Component {
         }
         return (
             <div onClick={this.handlePickMovie} style={style}>
-                Pick a movie for me!
+                wut to watch now?
             </div>
         );
     }
