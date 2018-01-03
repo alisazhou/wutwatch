@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import ToggleWatchlistArrowIcon from './ToggleWatchlistArrowIcon';
 import { background800, backgroundTitle, typographyBody2 } from '../cssConstants';
+import { toggleWatchlistsActionCreator } from '../../state/actions/uiActions';
 
 
 const divStyle = {
@@ -20,7 +21,9 @@ const divStyle = {
 
 const CurrentWatchlistTitle = props =>
     <div>
-        <div style={divStyle}>{props.selectedWatchlist.name || 'all watchlists'}</div>
+        <div onClick={props.toggleWatchlists} style={divStyle}>
+            {props.selectedWatchlist.name || 'all watchlists'}
+        </div>
         <ToggleWatchlistArrowIcon />
     </div>;
 
@@ -28,6 +31,13 @@ const mapStateToProps = state => ({
     selectedWatchlist: state.watchlists.selectedWatchlist,
 });
 
-const ConnectedTitle = connect(mapStateToProps)(CurrentWatchlistTitle);
+const mapDispatchToProps = dispatch => ({
+    toggleWatchlists: e => {
+        e.stopPropagation(); // AllWatchListDropdown adds a window onClick listener on mount
+        dispatch(toggleWatchlistsActionCreator());
+    },
+})
+
+const ConnectedTitle = connect(mapStateToProps, mapDispatchToProps)(CurrentWatchlistTitle);
 
 export default ConnectedTitle;

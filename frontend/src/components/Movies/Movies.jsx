@@ -42,15 +42,17 @@ class Movies extends React.Component {
     }
     render() {
         const { searchedMovie, selectedWatchlist } = this.props;
+        const onWatchlist = !_.isEmpty(selectedWatchlist) && _.isEmpty(searchedMovie);
+        const onSearchResult = !_.isEmpty(searchedMovie);
 
         return (
             <div>
-                {!_.isEmpty(selectedWatchlist) && _.isEmpty(searchedMovie) && <SearchMovieForm />}
-                {_.isEmpty(searchedMovie) ?
-                    <MoviesList movies={this.movies} /> :
-                    <SearchedMovieResult movie={searchedMovie} />
+                {onWatchlist && <SearchMovieForm />}
+                {onSearchResult ?
+                    <SearchedMovieResult movie={searchedMovie} /> :
+                    <MoviesList movies={this.movies} />
                 }
-                {!_.isEmpty(selectedWatchlist) && <PickMovieButton movies={this.movies} />}
+                {onWatchlist && <PickMovieButton movies={this.movies} />}
             </div>
         );
     }

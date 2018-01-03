@@ -2,18 +2,19 @@ import React from 'react';
 
 import AddMovieForm from './AddMovieForm';
 import MoviesListItem from './MoviesListItem';
+import SearchedMovieConfirm from './SearchedMovieConfirm';
+import { typographySubtitle } from '../cssConstants';
 
+const style = {
+    textAlign: 'center',
+};
 
 const SearchedMovieResult = props => {
     if (props.movie.found) {
         return (
-            <div>
-                <div>is this the movie?</div>
+            <div style={style}>
                 <MoviesListItem {...props.movie} />
-                <div>
-                    <div>yes</div>
-                    <div>no</div>
-                </div>
+                <SearchedMovieConfirm />
             </div>
         );
     }
