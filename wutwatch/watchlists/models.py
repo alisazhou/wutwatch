@@ -26,3 +26,4 @@ class WatchHistory(models.Model):
 
     class Meta:
         unique_together = (('movie', 'watchlist'),)
+        verbose_name_plural = 'Watch histories'

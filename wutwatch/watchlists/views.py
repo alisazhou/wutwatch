@@ -1,4 +1,6 @@
+from datetime import date
 from rest_framework import permissions, status, viewsets
+from rest_framework.decorators import detail_route
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework.response import Response
 
@@ -33,7 +35,7 @@ class WatchListViewSet(CreateModelMixin,
         new_watchlist.watchers.add(user_profile)
 
         # TODO: can just update response.data['watchers']
-        response = Response(self.get_serializer(new_watchlist).data, status=status.HTTP_201_CREATED)
+        response.data['watchers'] = [user_profile.id]
 
         return response
 
@@ -59,7 +61,6 @@ class IsSharedWatchHistory(permissions.BasePermission):
 
 class WatchHistoryViewSet(ListModelMixin,
                           RetrieveModelMixin,
-                          UpdateModelMixin,
                           DestroyModelMixin,
                           viewsets.GenericViewSet):
     permission_classes = (permissions.IsAuthenticated, IsSharedWatchHistory,)
@@ -68,14 +69,10 @@ class WatchHistoryViewSet(ListModelMixin,
     def get_queryset(self):
         return WatchHistory.objects.filter(watchlist__watchers__user=self.request.user)
 
-    def update(self, request, *args, **kwargs):
-        fields_to_update = request.data.keys()
-        for field_name in ('movie', 'watchlist', 'date_added'):
-            if field_name in fields_to_update:
-                return Response(
-                    data={'error': 'Can only update date_watched for the watch history'},
-                    status=status.HTTP_400_BAD_REQUEST)
+    @detail_route(methods=['post'], url_path='mark-watched')
+    def mark_watched(self, request, pk=None):
+        watchhistory = self.get_object()
+        watchhistory.date_watched = date.today()
+        watchhistory.save()
 
-        response = super().update(request, *args, **kwargs)
-
-        return response
+        return Response(self.get_serializer(watchhistory).data, status=status.HTTP_200_OK)
