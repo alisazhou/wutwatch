@@ -6,6 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 import authReducer from './reducers/authReducer';
 import movieReducer from './reducers/movieReducer';
 import uiReducer from './reducers/uiReducer';
+import watchHistoryReducer from './reducers/watchHistoryReducer';
 import watchlistReducer from './reducers/watchlistReducer';
 
 
@@ -14,6 +15,7 @@ const reducers = combineReducers({
     form: formReducer,
     movies: movieReducer,
     ui: uiReducer,
+    watchHistories: watchHistoryReducer,
     watchlists: watchlistReducer,
 });
 

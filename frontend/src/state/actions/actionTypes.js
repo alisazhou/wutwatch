@@ -7,6 +7,7 @@ export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
 export const LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 
+
 // movie reducer action types
 export const CREATE_MOVIE_FAILURE = 'CREATE_MOVIE_FAILURE';
 export const CREATE_MOVIE_REQUEST = 'CREATE_MOVIE_REQUEST';
@@ -28,6 +29,13 @@ export const CLEAR_SEARCHED_MOVIE = 'CLEAR_SEARCHED_MOVIE';
 
 export const SELECT_MOVIE = 'SELECT_MOVIE';
 
+
+// watch history reducer action types
+export const LOAD_WATCH_HISTORIES_FAILURE = 'LOAD_WATCH_HISTORIES_FAILURE';
+export const LOAD_WATCH_HISTORIES_REQUEST = 'LOAD_WATCH_HISTORIES_REQUEST';
+export const LOAD_WATCH_HISTORIES_SUCCESS = 'LOAD_WATCH_HISTORIES_SUCCESS';
+
+
 // watchlist reducer action types
 export const CREATE_WATCHLIST_FAILURE = 'CREATE_WATCHLIST_FAILURE';
 export const CREATE_WATCHLIST_REQUEST = 'CREATE_WATCHLIST_REQUEST';
@@ -42,6 +50,7 @@ export const ADD_WATCHER_REQUEST = 'ADD_WATCHER_REQUEST';
 export const ADD_WATCHER_SUCCESS = 'ADD_WATCHER_SUCCESS';
 
 export const SELECT_WATCHLIST = 'SELECT_WATCHLIST';
+
 
 // UI reducer action types
 export const ADDING_WATCHLIST = 'ADDING_WATCHLIST';  // entering new watchlist name
