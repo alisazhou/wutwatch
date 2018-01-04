@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Dashboard from './Dashboard';
-import LoginPage from './LoginPage';
 import Navbar from '../Navbar/Navbar';
-import { loginUserSuccessActionCreator } from '../../state/actions/authActions';
+import { loadMoviesActionCreator } from '../../state/actions/movieActions';
+import { loadWatchlistsActionCreator } from '../../state/actions/watchlistActions';
 
 
 const style = {
@@ -11,6 +12,16 @@ const style = {
 };
 
 class HomePage extends React.Component {
+    componentWillMount() {
+        if (_.isEmpty(this.props.movies)) {
+            this.props.loadMovies();
+        }
+
+        if (_.isEmpty(this.props.watchlists)) {
+            this.props.loadWatchlists();
+        }
+    }
+
     render() {
         return (
             <div style={style}>
@@ -19,6 +30,22 @@ class HomePage extends React.Component {
             </div>
         );
     }
-}
+};
 
-export default HomePage;
+const mapStateToProps = state => ({
+    movies: state.movies.movies,
+    watchlists: state.watchlists.watchlists,
+});
+
+const mapDispatchToProps = dispatch => ({
+    loadMovies: () => {
+        dispatch(loadMoviesActionCreator());
+    },
+    loadWatchlists: () => {
+        dispatch(loadWatchlistsActionCreator());
+    },
+});
+
+const ConnectedPage = connect(mapStateToProps, mapDispatchToProps)(HomePage);
+
+export default ConnectedPage;
