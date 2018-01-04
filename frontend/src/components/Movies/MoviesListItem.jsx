@@ -1,29 +1,48 @@
 import React from 'react';
+import _ from 'lodash';
 import moment from 'moment';
 
-import { typographyBody1 } from '../cssConstants';
+import { buttonLight, typographyBody1, typographyTitleOnLight } from '../cssConstants';
 
 
 const style = {
     ...typographyBody1,
     display: 'inline-block',
+    position: 'relative',
     textAlign: 'center',
+    width: '160px',
 };
 
 const divStyle = {
-    width: '160px',
-}
+    ...typographyTitleOnLight,
+    background: buttonLight,
+    position: 'absolute',
+    top: '15px',
+    width: '100%',
+    zIndex: 1,
+};
 
 const imgStyle = {
     paddingTop: '15px',
-    width: '160px',
+    width: '100%',
 };
 
-const MoviesListItem = props =>
-    <div style={style}>
-        <img src={props.poster_url || '/static/no-image.jpg'} style={imgStyle} />
-        <div style={divStyle}>{props.name}</div>
-        <div>{moment(props.release_date).year() || null}</div>
-    </div>;
+const MoviesListItem = props => {
+    const finalImgStyle = _.clone(imgStyle);
+    if (props.watched) {
+        // gray out movie if it's been watched already
+        finalImgStyle.WebkitFilter = 'grayscale(100%)';
+        finalImgStyle.filter = 'grayscale(100%)';
+    }
+
+    return (
+        <div style={style}>
+            {props.watched && <div style={divStyle}>watched!</div>}
+            <img src={props.poster_url || '/static/no-image.jpg'} style={finalImgStyle} />
+            <div>{props.name}</div>
+            <div>{moment(props.release_date).year() || null}</div>
+        </div>
+    );
+}
 
 export default MoviesListItem;

@@ -13,7 +13,7 @@ const style = {
     right: '10px',
     top: '30px',
     width: '150px',
-    zIndex: 1,
+    zIndex: 2,
 };
 
 const itemStyle = {

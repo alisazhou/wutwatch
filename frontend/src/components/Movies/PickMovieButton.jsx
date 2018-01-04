@@ -26,6 +26,7 @@ class PickMovieButton extends React.Component {
 
     handlePickMovie = () => {
         const selectedMovie = _.sample(this.props.movies);
+        // TODO: show error if no movies to choose from
         this.props.selectMovie(selectedMovie || {});
 
         if (selectedMovie) {

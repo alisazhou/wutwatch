@@ -16,6 +16,7 @@ const style = {
     position: 'absolute',
     top: '63px',
     width: '180px',
+    zIndex: 2,
 };
 
 const divStyle = {
