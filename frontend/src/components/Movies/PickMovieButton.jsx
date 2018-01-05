@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { buttonMedium, typographyTitleOnLight } from '../cssConstants';
 import {
-    selectMovieActionCreator,
+    updateSelectedMovieActionCreator,
     updateJustPickedActionCreator,
 } from '../../state/actions/movieActions';
 
@@ -26,12 +26,14 @@ class PickMovieButton extends React.Component {
     handlePickMovie = () => {
         const selectedMovie = _.sample(this.props.movies);
         // TODO: show error if no movies to choose from
-        this.props.selectMovie(selectedMovie || {});
-
         if (selectedMovie) {
-            // movies could be an empty array if watchlist has no movies
             localStorage.setItem('lastPickedTime', moment().format());
+            localStorage.setItem('selectedMovieName', selectedMovie.name);
+            localStorage.setItem('selectedMoviePosterUrl', selectedMovie.poster_url);
+            localStorage.setItem('selectedMovieReleaseDate', selectedMovie.release_date);
+
             this.props.updateJustPicked();
+            this.props.updateSelectedMovie();
         }
     }
 
@@ -53,8 +55,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    selectMovie: selectedMovie => {
-        dispatch(selectMovieActionCreator(selectedMovie));
+    updateSelectedMovie: () => {
+        dispatch(updateSelectedMovieActionCreator());
     },
     updateJustPicked: () => {
         dispatch(updateJustPickedActionCreator());

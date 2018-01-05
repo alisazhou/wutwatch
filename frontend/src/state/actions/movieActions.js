@@ -2,7 +2,7 @@ import {
     CREATE_MOVIE_FAILURE, CREATE_MOVIE_REQUEST, CREATE_MOVIE_SUCCESS,
     LOAD_MOVIES_FAILURE, LOAD_MOVIES_REQUEST, LOAD_MOVIES_SUCCESS,
     SEARCH_MOVIE_FAILURE, SEARCH_MOVIE_REQUEST, SEARCH_MOVIE_SUCCESS,
-    CLEAR_SEARCHED_MOVIE, SELECT_MOVIE, UPDATE_JUST_PICKED,
+    CLEAR_SEARCHED_MOVIE, UPDATE_JUST_PICKED, UPDATE_SELECTED_MOVIE,
 } from './actionTypes';
 
 
@@ -120,14 +120,13 @@ const clearSearchedMovieActionCreator = () => ({
 });
 
 
-const selectMovieActionCreator = selectedMovie => ({
-    type: SELECT_MOVIE,
-    selectedMovie,
+const updateJustPickedActionCreator = () => ({
+    type: UPDATE_JUST_PICKED,
 });
 
 
-const updateJustPickedActionCreator = () => ({
-    type: UPDATE_JUST_PICKED,
+const updateSelectedMovieActionCreator = () => ({
+    type: UPDATE_SELECTED_MOVIE,
 });
 
 
@@ -136,6 +135,6 @@ export {
     loadMoviesActionCreator,
     searchMovieActionCreator,
     clearSearchedMovieActionCreator,
-    selectMovieActionCreator,
     updateJustPickedActionCreator,
+    updateSelectedMovieActionCreator,
 };
