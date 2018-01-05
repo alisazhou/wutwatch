@@ -4,7 +4,10 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 
 import { buttonMedium, typographyTitleOnLight } from '../cssConstants';
-import { selectMovieActionCreator } from '../../state/actions/movieActions';
+import {
+    selectMovieActionCreator,
+    updateJustPickedActionCreator,
+} from '../../state/actions/movieActions';
 
 
 const style = {
@@ -20,10 +23,6 @@ const style = {
 };
 
 class PickMovieButton extends React.Component {
-    state = {
-        lastPickedAt: moment(localStorage.getItem('lastPickedAt')),
-    };
-
     handlePickMovie = () => {
         const selectedMovie = _.sample(this.props.movies);
         // TODO: show error if no movies to choose from
@@ -31,16 +30,16 @@ class PickMovieButton extends React.Component {
 
         if (selectedMovie) {
             // movies could be an empty array if watchlist has no movies
-            localStorage.setItem('lastPickedAt', moment().format());
-            this.setState({ lastPickedAt: moment(localStorage.getItem('lastPickedAt')) });
+            localStorage.setItem('lastPickedTime', moment().format());
+            this.props.updateJustPicked();
         }
     }
 
     render() {
-        if (this.state.lastPickedAt.isAfter(moment().subtract(2, 'hours'))) {
-            // TODO: change this to disabled button with prompt text
-            return (<div>Please watch the movie first before picking another one</div>);
+        if (this.props.justPicked) {
+            return null;
         }
+
         return (
             <div onClick={this.handlePickMovie} style={style}>
                 wut to watch now?
@@ -49,12 +48,19 @@ class PickMovieButton extends React.Component {
     }
 }
 
+const mapStateToProps = state => ({
+    justPicked: state.movies.justPicked,
+})
+
 const mapDispatchToProps = dispatch => ({
     selectMovie: selectedMovie => {
         dispatch(selectMovieActionCreator(selectedMovie));
     },
+    updateJustPicked: () => {
+        dispatch(updateJustPickedActionCreator());
+    },
 });
 
-const ConnectedButton = connect(undefined, mapDispatchToProps)(PickMovieButton);
+const ConnectedButton = connect(mapStateToProps, mapDispatchToProps)(PickMovieButton);
 
 export default ConnectedButton;

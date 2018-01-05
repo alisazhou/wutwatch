@@ -29,6 +29,8 @@ export const CLEAR_SEARCHED_MOVIE = 'CLEAR_SEARCHED_MOVIE';
 
 export const SELECT_MOVIE = 'SELECT_MOVIE';
 
+export const UPDATE_JUST_PICKED = 'UPDATE_JUST_PICKED';
+
 
 // watch history reducer action types
 export const LOAD_WATCH_HISTORIES_FAILURE = 'LOAD_WATCH_HISTORIES_FAILURE';
