@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import requireAuth from '../requireAuth';
 import Movies from '../Movies/Movies';
-import Navbar from '../Navbar/Navbar';
 import Watchlists from '../Watchlists/Watchlists';
 import { loadMoviesActionCreator } from '../../state/actions/movieActions';
 import { loadWatchHistoriesActionCreator } from '../../state/actions/watchHistoryActions';
@@ -28,7 +27,6 @@ class Dashboard extends React.Component {
     render() {
         return (
             <div>
-                <Navbar />
                 <Watchlists />
                 <Movies />
             </div>
