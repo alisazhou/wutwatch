@@ -25,7 +25,8 @@ const Movies = props => {
         );
         _.map(filteredMovies, movie => {
             const movieHistory = _.find(currentWatchlistHistory, { movie: movie.id });
-            movie.watched = !_.isNull(movieHistory.date_watched);
+            // newly created movies do not have watch histories
+            movie.watched = !_.isUndefined(movieHistory) && !_.isNull(movieHistory.date_watched);
         })
     }
 
@@ -39,7 +40,7 @@ const Movies = props => {
         <div>
             {onWatchlistPage && <SearchMovieForm />}
             {onSearchResultPage ?
-                <SearchedMovieResult movie={searchedMovie} /> :
+                <SearchedMovieResult movie={props.searchedMovie} /> :
                 <MoviesList movies={filteredMovies} />
             }
             {onWatchlistPage && <PickMovieButton movies={unwatchedMovies} />}

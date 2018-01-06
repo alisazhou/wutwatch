@@ -4,6 +4,7 @@ import {
     SEARCH_MOVIE_FAILURE, SEARCH_MOVIE_REQUEST, SEARCH_MOVIE_SUCCESS,
     CLEAR_SEARCHED_MOVIE, UPDATE_JUST_PICKED, UPDATE_SELECTED_MOVIE,
 } from './actionTypes';
+import { loadWatchHistoriesActionCreator } from './watchHistoryActions';
 
 
 const HEADERS = {
@@ -39,6 +40,7 @@ const createMovieActionCreator = info => {
             .then(response => response.ok ? response.json() : Promise.reject(response.text()))
             .then(json => {
                 dispatch(createMovieSuccessActionCreator(json));
+                dispatch(loadWatchHistoriesActionCreator());
             }).catch(err => {
                 dispatch(createMovieFailureActionCreator(err));
             });

@@ -11,6 +11,7 @@ import {
     updateSelectedMovieActionCreator,
     updateJustPickedActionCreator,
 } from '../../state/actions/movieActions';
+import { markAsWatchedActionCreator } from '../../state/actions/watchHistoryActions';
 
 
 const style = {
@@ -34,6 +35,13 @@ class PickMovieButton extends React.Component {
 
         this.props.updateJustPicked();
         this.props.updateSelectedMovie();
+
+        // mark movie as watched in the watchlist
+        const watchHistory = _.find(
+            this.props.watchHistories,
+            { movie: selectedMovie.id, watchlist: this.props.selectedWatchlist.id }
+        );
+        this.props.markAsWatched(watchHistory.id);
     }
 
     render() {
@@ -58,9 +66,14 @@ class PickMovieButton extends React.Component {
 
 const mapStateToProps = state => ({
     justPicked: state.movies.justPicked,
-})
+    selectedWatchlist: state.watchlists.selectedWatchlist,
+    watchHistories: state.watchHistories.watchHistories,
+});
 
 const mapDispatchToProps = dispatch => ({
+    markAsWatched: historyId => {
+        dispatch(markAsWatchedActionCreator(historyId));
+    },
     updateSelectedMovie: () => {
         dispatch(updateSelectedMovieActionCreator());
     },

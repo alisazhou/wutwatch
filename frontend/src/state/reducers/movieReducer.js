@@ -15,11 +15,7 @@ const getJustPicked = () => {
 };
 
 const getSelectedMovie = () => {
-    const name = localStorage.getItem('selectedMovieName');
-    const poster_url = localStorage.getItem('selectedMoviePosterUrl');
-    const release_date = localStorage.getItem('selectedMovieReleaseDate');
-
-    return { name, poster_url, release_date };
+    return JSON.parse(localStorage.getItem('selectedMovie'));
 };
 
 
