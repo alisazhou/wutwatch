@@ -39,7 +39,9 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         # create a user using the email as username
-        user = User.objects.create(username=request.data.get('email'), **request.data)
+        user = User(username=request.data.get('email'), **request.data)
+        user.set_password(request.data['password'])
+        user.save()
         # create a Profile instance with the newly created user
         request.data['user'] = user.id
         response = super().create(request, *args, **kwargs)
