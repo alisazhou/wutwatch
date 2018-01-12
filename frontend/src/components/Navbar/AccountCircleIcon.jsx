@@ -25,7 +25,7 @@ const AccountCircleIcon = props => {
         <IconWrapper onClick={props.toggleDropdown} style={style}>
             <AccountCircleSvg fill={fill} />
         </IconWrapper>
-    )
+    );
 };
 
 const mapStateToProps = state => ({

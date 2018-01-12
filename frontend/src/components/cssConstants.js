@@ -9,8 +9,10 @@ const buttonLight = '#B0BEC5';
 const buttonAccent = '#607D8B';
 
 const textNormal = '#ffffff';
-const textDim = '#757575';
+const textDim = '#9E9E9E';
 const textOnLight = '#000000';
+const textConfirm = '#009688';
+const textWarning = '#BF360C';
 
 const typographyBody1 = {
     color: textNormal,
@@ -33,6 +35,16 @@ const typographyBody2Dim = {
     color: textDim,
 };
 
+const typographyBody2Confirm = {
+    ...typographyBody2,
+    color: textConfirm,
+};
+
+const typographyBody2Warning = {
+    ...typographyBody2,
+    color: textWarning,
+};
+
 const typographyTitle = {
     color: textNormal,
     fontFamily: 'Arvo, serif',
@@ -52,9 +64,9 @@ const typographySubtitle = {
 export {
     backgroundNormal, backgroundTitle, background800, background600,
     buttonAccent, buttonNormal, buttonMedium, buttonLight,
-    textNormal,
+    textNormal, textDim, textConfirm,
     typographyBody1, typographyBody1OnLight,
-    typographyBody2, typographyBody2Dim,
+    typographyBody2, typographyBody2Dim, typographyBody2Confirm, typographyBody2Warning,
     typographyTitle, typographyTitleOnLight,
     typographySubtitle,
 };
