@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 
 import { textConfirm, textDim, typographyBody1 } from '../cssConstants';
@@ -56,15 +57,19 @@ const rightSpanStyle ={
 
 const BottomNavbar = props =>
     <div style={style}>
-        <div>
+        <div onClick={props.closeEditWatchlists}>
             <BackArrowIcon />
             <span style={leftSpanStyle}>cancel</span>
         </div>
-        <div>
+        {props.hasSelectedWatchlist && <div>
             <span style={rightSpanStyle}>save</span>
             <CheckMarkIcon />
-        </div>
+        </div>}
     </div>;
+
+const mapStateToProps = state => ({
+    hasSelectedWatchlist: !_.isEmpty(state.watchlists.selectedWatchlist),
+});
 
 const mapDispatchToProps = dispatch => ({
     closeEditWatchlists: () => {
@@ -72,6 +77,6 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-const ConnectedNavbar = connect(undefined, mapDispatchToProps)(BottomNavbar);
+const ConnectedNavbar = connect(mapStateToProps, mapDispatchToProps)(BottomNavbar);
 
 export default ConnectedNavbar;
