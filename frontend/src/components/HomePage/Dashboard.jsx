@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import requireAuth from '../requireAuth';
+import EditWatchlists from '../EditWatchlists/EditWatchlists'
 import Movies from '../Movies/Movies';
 import Watchlists from '../Watchlists/Watchlists';
 import { loadMoviesActionCreator } from '../../state/actions/movieActions';
@@ -28,7 +29,7 @@ class Dashboard extends React.Component {
         return (
             <div>
                 <Watchlists />
-                <Movies />
+                {this.props.showingEditWatchlists ? <EditWatchlists /> : <Movies />}
             </div>
         );
     }
@@ -36,6 +37,7 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
     movies: state.movies.movies,
+    showingEditWatchlists: state.ui.showingEditWatchlists,
     watchHistories: state.watchHistories.watchHistories,
     watchlists: state.watchlists.watchlists,
 });

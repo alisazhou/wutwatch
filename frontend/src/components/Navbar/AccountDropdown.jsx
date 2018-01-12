@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 
 import AccountDropdownItem from './AccountDropdownItem';
 import { buttonLight, typographyBody1OnLight } from '../cssConstants';
-import { toggleAccountDropdownActionCreator } from '../../state/actions/uiActions';
+import {
+    showEditWatchlistsActionCreator,
+    toggleAccountDropdownActionCreator,
+} from '../../state/actions/uiActions';
 
 
 const style = {
@@ -33,7 +36,11 @@ class AccountDropdown extends React.Component {
     render() {
         return (
             <div style={style}>
-                <AccountDropdownItem style={itemStyle} content='edit watchlists' />
+                <AccountDropdownItem
+                    onClick={this.props.showEditWatchlists}
+                    style={itemStyle}
+                    content='edit watchlists'
+                />
                 <AccountDropdownItem style={itemStyle} content='log out' />
             </div>
         );
@@ -41,6 +48,9 @@ class AccountDropdown extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
+    showEditWatchlists: () => {
+        dispatch(showEditWatchlistsActionCreator(true));
+    },
     toggleAccountDropdown: () => {
         dispatch(toggleAccountDropdownActionCreator());
     },

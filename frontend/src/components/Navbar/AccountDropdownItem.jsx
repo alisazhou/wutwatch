@@ -12,7 +12,7 @@ const AccountDropdownItem = props => {
     }
 
     return (
-        <div style={finalStyle}>{props.content}</div>
+        <div style={finalStyle} onClick={props.onClick}>{props.content}</div>
     );
 }
 
