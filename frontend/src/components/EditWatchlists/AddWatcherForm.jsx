@@ -2,13 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm, reset } from 'redux-form';
 
-import { addWatcherActionCreator } from '../../state/actions/watchlistActions';
+import {
+    addWatcherActionCreator,
+    selectWatchlistActionCreator,
+} from '../../state/actions/watchlistActions';
 
 
 class AddWatcherForm extends React.Component {
     handleAddWatcher = watcherInfo => {
-        this.props.addWatcher(this.props.selectedWatchlist, watcherInfo);
-    }
+        this.props.addWatcher(this.props.selectedWatchlist.id, watcherInfo)
+            .then(updatedWatchlist => {
+                this.props.selectWatchlist(updatedWatchlist);
+            });
+    };
 
     render() {
         if (!this.props.selectedWatchlist) {
@@ -30,7 +36,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     addWatcher: (selectedWatchlist, watcherInfo) => {
-        dispatch(addWatcherActionCreator(selectedWatchlist, watcherInfo));
+        return dispatch(addWatcherActionCreator(selectedWatchlist, watcherInfo));
+    },
+    selectWatchlist: watchlist => {
+        dispatch(selectWatchlistActionCreator(watchlist));
     },
 });
 

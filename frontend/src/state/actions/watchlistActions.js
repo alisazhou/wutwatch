@@ -108,11 +108,11 @@ const addWatcherActionCreator = (watchlistId, watcherInfo) => {
     return dispatch => {
         dispatch(addWatcherRequestActionCreator());
 
-        fetch(`http://${window.location.host}/api/watchlists/${watchlistId}/`, config)
+        return fetch(`http://${window.location.host}/api/watchlists/${watchlistId}/`, config)
             .then(response => response.ok ? response.json() : Promise.reject(response.text()))
             .then(json => {
-                console.log(json);
                 dispatch(addWatcherSuccessActionCreator(json));
+                return json;
             }).catch(err => {
                 console.log(err);
                 dispatch(addWatcherFailureActionCreator(err));
@@ -144,7 +144,7 @@ const removeMovieActionCreator = (movieId, watchlistId) => {
     return dispatch => {
         dispatch(removeMovieRequestActionCreator());
 
-        fetch(`http://${window.location.host}/api/watchlists/${watchlistId}/remove-movie/`, config)
+        return fetch(`http://${window.location.host}/api/watchlists/${watchlistId}/remove-movie/`, config)
             .then(response => response.ok ? response.json() : Promise.reject(response.text()))
             .then(json => {
                 console.log(json);

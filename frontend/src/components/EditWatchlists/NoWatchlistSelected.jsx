@@ -10,7 +10,7 @@ const style = {
 };
 
 const NoWatchlistSelected = props =>
-    <div style={style}>select a watchlist to edit</div>;
+    <div style={style}>select a watchlist above to edit</div>;
 
 
 export default NoWatchlistSelected;
