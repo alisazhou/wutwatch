@@ -2,31 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm, reset } from 'redux-form';
 
-import { backgroundTitle, background800, typographyBody2 } from '../cssConstants';
+import StyledField from '../common/StyledField';
 import { createWatchlistActionCreator } from '../../state/actions/watchlistActions';
 import { addingWatchlistActionCreator } from '../../state/actions/uiActions';
 
 
-const inputStyle = {
-    ...typographyBody2,
-    background: backgroundTitle,
-    border: 'none',
-    borderBottom: '1px dotted',
-    borderBottomColor: background800,
-    fontStyle: 'italic',
-    outline: 'none',
+const additionalInputStyle = {
     position: 'relative',
     left: '215px',
     top: '4px',
-    width: 'fit-content',
 };
 
 const AddWatchlistForm = props => (
     <form onSubmit={props.handleSubmit(props.createWatchlist)}>
-        <Field component="input" type="text" name="name"
+        <StyledField
+            additionalStyle={additionalInputStyle}
+            name="name"
             onBlur={props.hideAddWatchlistForm}
-            placeholder='add new list...'
-            style={inputStyle}
+            placeholder="add new watchlist..."
         />
     </form>
 );

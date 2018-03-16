@@ -2,11 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm, reset } from 'redux-form';
 
+import StyledField from '../common/StyledField';
 import {
     addWatcherActionCreator,
     selectWatchlistActionCreator,
 } from '../../state/actions/watchlistActions';
 
+
+const style = {
+    margin: '20px',
+};
+
+const additionalInputStyle = {
+    width: '60%',
+};
 
 class AddWatcherForm extends React.Component {
     handleAddWatcher = watcherInfo => {
@@ -22,9 +31,16 @@ class AddWatcherForm extends React.Component {
         }
 
         return (
-            <form onSubmit={this.props.handleSubmit(this.handleAddWatcher)}>
-                email: <Field component="input" type="text" name="watcher" />
-                <button type="submit">Add Watcher to Watchlist</button>
+            <form
+                onSubmit={this.props.handleSubmit(this.handleAddWatcher)}
+                style={style}
+            >
+                <StyledField
+                    additionalStyle={additionalInputStyle}
+                    name="watcher"
+                    placeholder="new watcher's email address"
+                />
+                <button type="submit">Add to Watchlist</button>
             </form>
         );
     }
