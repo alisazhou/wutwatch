@@ -6,6 +6,7 @@ import EditWatchlists from '../EditWatchlists/EditWatchlists'
 import Movies from '../Movies/Movies';
 import Watchlists from '../Watchlists/Watchlists';
 import { loadMoviesActionCreator } from '../../state/actions/movieActions';
+import { loadProfilesActionCreator } from '../../state/actions/profileActions';
 import { loadWatchHistoriesActionCreator } from '../../state/actions/watchHistoryActions';
 import { loadWatchlistsActionCreator } from '../../state/actions/watchlistActions';
 
@@ -14,6 +15,10 @@ class Dashboard extends React.Component {
     componentWillMount() {
         if (_.isEmpty(this.props.movies)) {
             this.props.loadMovies();
+        }
+
+        if (_.isEmpty(this.props.profiles)) {
+            this.props.loadProfiles();
         }
 
         if (_.isEmpty(this.props.watchHistories)) {
@@ -37,6 +42,7 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
     movies: state.movies.movies,
+    profiles: state.profiles.profiles,
     showingEditWatchlists: state.ui.showingEditWatchlists,
     watchHistories: state.watchHistories.watchHistories,
     watchlists: state.watchlists.watchlists,
@@ -45,6 +51,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     loadMovies: () => {
         dispatch(loadMoviesActionCreator());
+    },
+    loadProfiles: () => {
+        dispatch(loadProfilesActionCreator());
     },
     loadWatchHistories: () => {
         dispatch(loadWatchHistoriesActionCreator());

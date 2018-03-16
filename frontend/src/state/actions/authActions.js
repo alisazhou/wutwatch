@@ -8,15 +8,12 @@ const createUserFailureActionCreator = err => ({
     type: CREATE_USER_FAILURE,
     err,
 });
-
 const createUserRequestActionCreator = () => ({
     type: CREATE_USER_REQUEST,
 });
-
 const createUserSuccessActionCreator = () => ({
     type: CREATE_USER_SUCCESS,
 });
-
 const createUserAction = creds => {
     const config = {
         method: 'POST',
@@ -48,15 +45,12 @@ const loginUserFailureActionCreator = err => ({
     type: LOGIN_USER_FAILURE,
     err,
 });
-
 const loginUserRequestActionCreator = () => ({
     type: LOGIN_USER_REQUEST,
 });
-
 const loginUserSuccessActionCreator = () => ({
     type: LOGIN_USER_SUCCESS,
 });
-
 const loginUserAction = creds => {
     const config = {
         method: 'POST',
@@ -82,7 +76,11 @@ const loginUserAction = creds => {
                 dispatch(loginUserFailureActionCreator(err));
             });
     };
-}
+};
 
 
-export { createUserAction, loginUserAction, loginUserSuccessActionCreator };
+export {
+    createUserAction,
+    loginUserAction,
+    loginUserSuccessActionCreator,
+};
