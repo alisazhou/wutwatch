@@ -7,12 +7,12 @@ const style = {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    padding: '0px 15px',
+    padding: '0px 15px 45px 15px',
 };
 
 const MoviesList = props =>
     <div style={style}>
         {_.map(props.movies, movie => <MoviesListItem key={movie.id} {...movie} />)}
-    </div>
+    </div>;
 
 export default MoviesList;
