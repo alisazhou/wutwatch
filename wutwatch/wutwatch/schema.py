@@ -1,8 +1,12 @@
 import graphene
+
+import movies.schema
 import profiles.schema
 
 
-class Query(profiles.schema.Query, graphene.ObjectType):
+class Query(movies.schema.Query,
+            profiles.schema.Query,
+            graphene.ObjectType):
     pass
 
 
