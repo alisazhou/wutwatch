@@ -40,10 +40,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_extensions',
+    'graphene_django',
     'profiles',
     'movies',
     'watchlists',
 ]
+
+GRAPHENE = {
+    'SCHEMA': 'wutwatch.schema.schema',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
