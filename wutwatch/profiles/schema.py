@@ -29,8 +29,8 @@ class ProfileFilter(django_filters.FilterSet):
 
     @property
     def qs(self):
-        return super(ProfileFilter, self).qs.\
-            prefetch_related('watchlists__watchers__user')\
+        return super(ProfileFilter, self).qs \
+            .prefetch_related('watchlists__watchers__user')\
             .filter(watchlists__watchers__user=self.request.user).distinct()
 
 
