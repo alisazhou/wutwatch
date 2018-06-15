@@ -19,13 +19,19 @@ class WatchHistoryFilter(django_filters.FilterSet):
 
     class Meta:
         model = WatchHistory
-        fields = ('movie', 'watchlist',)
+        fields = ('movie', 'watchlist', )
+
+    @property
+    def qs(self):
+        return super(WatchHistoryFilter, self).qs \
+            .prefetch_related('watchlist__watchers__user') \
+            .filter(watchlist__watchers__user=self.request.user)
 
 
 class WatchListType(DjangoObjectType):
     class Meta:
         model = WatchList
-        interfaces = (graphene.Node,)
+        interfaces = (graphene.Node, )
 
 
 class WatchListFilter(django_filters.FilterSet):
@@ -34,6 +40,12 @@ class WatchListFilter(django_filters.FilterSet):
     class Meta:
         model = WatchHistory
         fields = ('name',)
+
+    @property
+    def qs(self):
+        return super(WatchListFilter, self).qs \
+            .prefetch_related('watchers__user') \
+            .filter(watchers__user=self.request.user)
 
 
 class Query(object):
