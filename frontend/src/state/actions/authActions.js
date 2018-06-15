@@ -31,10 +31,8 @@ const createUserAction = creds => {
         return fetch(`http://${window.location.host}/api/profiles/`, config)
             .then(response => response.ok ? response.json() : Promise.reject(response.text()))
             .then(json => {
-                console.log(json);
                 dispatch(createUserSuccessActionCreator());
             }).catch(err => {
-                console.log(err);
                 dispatch(createUserFailureActionCreator(err));
             });
     };
@@ -68,11 +66,9 @@ const loginUserAction = creds => {
         return fetch(`http://${window.location.host}/api/authtoken/`, config)
             .then(response => response.ok ? response.json() : Promise.reject(response.text()))
             .then(json => {
-                console.log(json);
                 localStorage.setItem('token', json.token);
                 dispatch(loginUserSuccessActionCreator());
             }).catch(err => {
-                console.log(err);
                 dispatch(loginUserFailureActionCreator(err));
             });
     };

@@ -107,10 +107,8 @@ const searchMovieActionCreator = movieName => {
         return fetch(`http://${window.location.host}/api/search-movie/`, config)
             .then(response => response.ok ? response.json() : Promise.reject(response.text()))
             .then(json => {
-                console.log(json);
                 dispatch(searchMovieSuccessActionCreator(json));
             }).catch(err => {
-                console.log(err);
                 dispatch(searchMovieFailureActionCreator(err));
             });
     };

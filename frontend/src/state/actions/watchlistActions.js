@@ -40,10 +40,8 @@ const createWatchlistActionCreator = info => {
         return fetch(`http://${window.location.host}/api/watchlists/`, config)
             .then(response => response.ok ? response.json() : Promise.reject(response.text()))
             .then(json => {
-                console.log(json);
                 dispatch(createWatchlistSuccessActionCreator(json));
             }).catch(err => {
-                console.log(err);
                 dispatch(createWatchlistFailureActionCreator(err));
             });
     };
@@ -75,10 +73,8 @@ const loadWatchlistsActionCreator = () => {
         return fetch(`http://${window.location.host}/api/watchlists/`, config)
             .then(response => response.ok ? response.json() : Promise.reject(response.text()))
             .then(json => {
-                console.log(json);
                 dispatch(loadWatchlistsSuccessActionCreator(json));
             }).catch(err => {
-                console.log(err);
                 dispatch(loadWatchlistsFailureActionCreator(err));
             });
     };
@@ -114,7 +110,6 @@ const addWatcherActionCreator = (watchlistId, watcherInfo) => {
                 dispatch(addWatcherSuccessActionCreator(json));
                 return json;
             }).catch(err => {
-                console.log(err);
                 dispatch(addWatcherFailureActionCreator(err));
             });
     }
@@ -147,10 +142,8 @@ const removeMovieActionCreator = (movieId, watchlistId) => {
         return fetch(`http://${window.location.host}/api/watchlists/${watchlistId}/remove-movie/`, config)
             .then(response => response.ok ? response.json() : Promise.reject(response.text()))
             .then(json => {
-                console.log(json);
                 dispatch(removeMovieSuccessActionCreator(json));
             }).catch(err => {
-                console.log(err);
                 dispatch(removeMovieFailureActionCreator(err));
             });
     }
