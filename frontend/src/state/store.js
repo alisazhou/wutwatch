@@ -1,3 +1,4 @@
+import ApolloClient from 'apollo-boost';  // TODO: see https://www.apollographql.com/docs/react/advanced/boost-migration.html
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import logger from 'redux-logger';
@@ -10,6 +11,13 @@ import uiReducer from './reducers/uiReducer';
 import watchHistoryReducer from './reducers/watchHistoryReducer';
 import watchlistReducer from './reducers/watchlistReducer';
 
+
+const client = new ApolloClient({
+    uri: '/graphql/',
+    opts: {
+        credentials: 'same-origin',
+    },
+});
 
 const reducers = combineReducers({
     auth: authReducer,
@@ -26,4 +34,4 @@ const store = createStore(
     applyMiddleware(thunkMiddleware, logger)
 );
 
-export default store;
+export { store, client };
