@@ -20,10 +20,6 @@ class Dashboard extends React.Component {
         if (_.isEmpty(this.props.watchHistories)) {
             this.props.loadWatchHistories();
         }
-
-        if (_.isEmpty(this.props.watchlists)) {
-            this.props.loadWatchlists();
-        }
     }
 
     render() {
@@ -40,7 +36,6 @@ const mapStateToProps = state => ({
     profiles: state.profiles.profiles,
     showingEditWatchlists: state.ui.showingEditWatchlists,
     watchHistories: state.watchHistories.watchHistories,
-    watchlists: state.watchlists.watchlists,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -49,9 +44,6 @@ const mapDispatchToProps = dispatch => ({
     },
     loadWatchHistories: () => {
         dispatch(loadWatchHistoriesActionCreator());
-    },
-    loadWatchlists: () => {
-        dispatch(loadWatchlistsActionCreator());
     },
 });
 

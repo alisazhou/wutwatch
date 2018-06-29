@@ -1,5 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 import { connect } from 'react-redux';
 
 import AllWatchlistsDropdownItem from './AllWatchlistsDropdownItem';
@@ -27,6 +29,18 @@ const divStyle = {
     whiteSpace: 'nowrap',
 };
 
+
+const LOAD_WATCHLISTS = gql`{
+    allWatchlists {
+        edges {
+            node {
+                id
+                name
+            }
+        }
+    }
+}`;
+
 class AllWatchlistsDropdown extends React.Component {
     componentDidMount() {
         window.addEventListener('click', this.props.toggleWatchlists);
@@ -40,10 +54,10 @@ class AllWatchlistsDropdown extends React.Component {
         return (
             <div style={style}>
                 <AllWatchlistsDropdownItem watchlist={{}} style={divStyle} />
-                {_.map(this.props.watchlists, watchlist =>
+                {_.map(this.props.watchlists.edges, watchlist =>
                     <AllWatchlistsDropdownItem
-                        key={watchlist.id}
-                        watchlist={watchlist}
+                        key={watchlist.node.id}
+                        watchlist={watchlist.node}
                         style={divStyle}
                     />
                 )}
@@ -52,17 +66,24 @@ class AllWatchlistsDropdown extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({
-    watchlists: state.watchlists.watchlists,
-});
-
 const mapDispatchToProps = dispatch => ({
     toggleWatchlists: () => {
         dispatch(toggleWatchlistsActionCreator());
     },
 });
 
-const ConnectedDropdown = connect(mapStateToProps, mapDispatchToProps)(AllWatchlistsDropdown);
+const ConnectedDropdown = connect(null, mapDispatchToProps)(AllWatchlistsDropdown);
 
 
-export default ConnectedDropdown;
+const QueriedDropdown = () =>
+    <Query query={LOAD_WATCHLISTS}>
+        {({ data, error, loading }) => {
+            if (!error && !loading) {
+                return <ConnectedDropdown watchlists={data.allWatchlists} />
+            }
+            return null;
+        }}
+    </Query>;
+
+
+export default QueriedDropdown;
