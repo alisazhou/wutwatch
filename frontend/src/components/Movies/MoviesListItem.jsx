@@ -38,9 +38,9 @@ const MoviesListItem = props => {
     return (
         <div style={style}>
             {props.watched && <div style={divStyle}>watched!</div>}
-            <img src={props.poster_url || '/static/no-image.jpg'} style={finalImgStyle} />
+            <img src={props.posterUrl || '/static/no-image.jpg'} style={finalImgStyle} />
             <div>{props.name}</div>
-            <div>{moment(props.release_date).year() || null}</div>
+            <div>{moment(props.releaseDate).year() || null}</div>
         </div>
     );
 }

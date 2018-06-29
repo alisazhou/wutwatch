@@ -8,27 +8,6 @@ import { store, client } from './state/store';
 import HomePage from './components/HomePage/HomePage';
 
 
-client.query({
-  query: gql`
-    {
-      allProfiles {
-        edges {
-          node {
-            user {
-              email
-            }
-          }
-        }
-      }
-    }
-  `
-}).then(result => {
-  console.log(result);
-}).catch(err => {
-  console.log('goddammit');
-});
-
-
 class App extends React.Component {
     render() {
         return (

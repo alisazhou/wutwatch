@@ -12,7 +12,7 @@ const style = {
 
 const MoviesList = props =>
     <div style={style}>
-        {_.map(props.movies, movie => <MoviesListItem key={movie.id} {...movie} />)}
+        {_.map(props.movies, movie => <MoviesListItem key={movie.node.id} {...movie.node} />)}
     </div>;
 
 export default MoviesList;

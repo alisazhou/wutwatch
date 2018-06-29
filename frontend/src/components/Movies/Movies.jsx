@@ -1,5 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 import { connect } from 'react-redux';
 
 import AddMovieForm from './AddMovieForm';
@@ -9,13 +11,36 @@ import SearchMovieForm from './SearchMovieForm';
 import SearchedMovieResult from './SearchedMovieResult';
 
 
+const LOAD_MOVIES = gql`{
+    allMovies {
+        edges {
+            node {
+                id
+                moviedbId
+                name
+                posterUrl
+                releaseDate
+                watchlists {
+                    edges {
+                        node {
+                            id
+                        }
+                    }
+                }
+            }
+        }
+    }
+}`;
+
+
 const Movies = props => {
     // if viewing all watchlists, return all movies;
     // else filter movies for the currently viewing watchlist, with watch history
-    let filteredMovies = _.cloneDeep(props.movies);
+    let filteredMovies = _.cloneDeep(props.movies.edges);
     if (!_.isEmpty(props.selectedWatchlist)) {
+        // TODO: link local state to get selectedWatchlist.movies instead
         filteredMovies = _.filter(filteredMovies, movie =>
-            _.includes(movie.watchlists, props.selectedWatchlist.id)
+            _.includes(movie.node.watchlists, props.selectedWatchlist.id)
         );
 
         // mark watched movies as such to be grayed out in selected watchlist
@@ -31,6 +56,7 @@ const Movies = props => {
     }
 
     // only pick from unwatched movies
+    // TODO: update this as well
     const unwatchedMovies = _.filter(filteredMovies, { watched: false });
 
     const onWatchlistPage = !_.isEmpty(props.selectedWatchlist) && _.isEmpty(props.searchedMovie);
@@ -49,7 +75,6 @@ const Movies = props => {
 };
 
 const mapStateToProps = state => ({
-    movies: state.movies.movies,
     searchedMovie: state.movies.searchedMovie,
     selectedWatchlist: state.watchlists.selectedWatchlist,
     watchHistories: state.watchHistories.watchHistories,
@@ -57,4 +82,16 @@ const mapStateToProps = state => ({
 
 const ConnectedMovies = connect(mapStateToProps)(Movies);
 
-export default ConnectedMovies;
+
+const QueriedMovies = () =>
+    <Query query={LOAD_MOVIES}>
+        {({ data, error, loading }) => {
+            if (!error && !loading) {
+                return <ConnectedMovies movies={data.allMovies} />;
+            }
+
+            return null;
+        }}
+    </Query>;
+
+export default QueriedMovies;
