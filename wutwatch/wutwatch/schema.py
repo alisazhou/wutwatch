@@ -12,4 +12,9 @@ class Query(movies.schema.Query,
     pass
 
 
-schema = graphene.Schema(query=Query)
+class Mutations(watchlists.schema.Mutation,
+                graphene.ObjectType):
+    pass
+
+
+schema = graphene.Schema(query=Query, mutation=Mutations)

@@ -5,6 +5,7 @@ from graphene_django.types import DjangoObjectType
 
 
 from .models import WatchHistory, WatchList
+from profiles.models import Profile
 
 
 class WatchHistoryType(DjangoObjectType):
@@ -48,6 +49,19 @@ class WatchListFilter(django_filters.FilterSet):
             .filter(watchers__user=self.request.user)
 
 
+class CreateWatchListMutation(graphene.Mutation):
+    class Input:
+        name = graphene.String()
+
+    status = graphene.Int()
+    watchlist = graphene.Field(WatchListType)
+
+    def mutate(self, info, name):
+        watchlist = WatchList.objects.create(name=name)
+        watcher = Profile.objects.get(user=info.context.user)
+        watchlist.watchers.add(watcher)
+        return CreateWatchListMutation(watchlist=watchlist, status=200)
+
 class Query(object):
     watch_history = graphene.Node.Field(WatchHistoryType)
     all_watch_histories = DjangoFilterConnectionField(
@@ -56,3 +70,7 @@ class Query(object):
 
     watchlist = graphene.Node.Field(WatchListType)
     all_watchlists = DjangoFilterConnectionField(WatchListType, filterset_class=WatchListFilter)
+
+
+class Mutation(object):
+    create_watchlist = CreateWatchListMutation.Field()
