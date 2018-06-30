@@ -17,6 +17,11 @@ const client = new ApolloClient({
     opts: {
         credentials: 'same-origin',
     },
+    clientState: {
+        defaults: {
+            selectedWatchlist: null,
+        },
+    },
 });
 
 const reducers = combineReducers({

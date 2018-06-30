@@ -21,14 +21,6 @@ const style = {
     zIndex: 2,
 };
 
-const divStyle = {
-    height: '20px',
-    overflowX: 'hidden',
-    padding: '4px 0px 0px 10px',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-};
-
 
 const LOAD_WATCHLISTS = gql`{
     allWatchlists {
@@ -53,12 +45,11 @@ class AllWatchlistsDropdown extends React.Component {
     render() {
         return (
             <div style={style}>
-                <AllWatchlistsDropdownItem watchlist={{}} style={divStyle} />
+                <AllWatchlistsDropdownItem watchlist={{ id: null }} />
                 {_.map(this.props.watchlists.edges, watchlist =>
                     <AllWatchlistsDropdownItem
                         key={watchlist.node.id}
                         watchlist={watchlist.node}
-                        style={divStyle}
                     />
                 )}
             </div>
