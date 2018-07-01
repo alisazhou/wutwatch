@@ -19,7 +19,7 @@ const client = new ApolloClient({
     },
     clientState: {
         defaults: {
-            selectedWatchlist: null,
+            selectedWatchlist: {},
         },
     },
 });

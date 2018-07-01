@@ -23,12 +23,12 @@ const GET_SELECTED_WATCHLIST = gql`{
 
 class AllWatchlistsDropdownItem extends React.Component {
     onClick = () => {
-        this.props.clickHandler(this.props.watchlist.id);
+        this.props.clickHandler(this.props.watchlist);
     }
 
     render() {
         const finalStyle = _.clone(style);
-        if (this.props.watchlist.id === this.props.selectedWatchlist) {
+        if (_.isEqual(this.props.watchlist, this.props.selectedWatchlist)) {
             finalStyle.fontStyle = 'italic';
         }
         if (this.props.hovering) {
@@ -47,8 +47,8 @@ const ApolloItem = props =>
     <Query query={GET_SELECTED_WATCHLIST}>
         {({ client, data, error, loading }) => {
             if (!error && !loading) {
-                const clickHandler = watchlistId => {
-                    client.writeData({ data: { selectedWatchlist: watchlistId } });
+                const clickHandler = watchlist => {
+                    client.writeData({ data: { selectedWatchlist: watchlist } });
                 };
 
                 return (

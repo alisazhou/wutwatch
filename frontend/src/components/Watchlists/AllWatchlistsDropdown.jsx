@@ -45,7 +45,7 @@ class AllWatchlistsDropdown extends React.Component {
     render() {
         return (
             <div style={style}>
-                <AllWatchlistsDropdownItem watchlist={{ id: null }} />
+                <AllWatchlistsDropdownItem watchlist={{}} />
                 {_.map(this.props.watchlists.edges, watchlist =>
                     <AllWatchlistsDropdownItem
                         key={watchlist.node.id}
