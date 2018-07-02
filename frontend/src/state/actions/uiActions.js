@@ -3,7 +3,6 @@ import {
     SHOW_EDIT_WATCHLISTS,
     SHOW_LOGIN_TAB,
     TOGGLE_ACCOUNT_DROPDOWN,
-    TOGGLE_WATCHLISTS,
 } from './actionTypes';
 
 
@@ -26,9 +25,6 @@ const toggleAccountDropdownActionCreator = () => ({
     type: TOGGLE_ACCOUNT_DROPDOWN,
 });
 
-const toggleWatchlistsActionCreator = () => ({
-    type: TOGGLE_WATCHLISTS,
-});
 
 
 export {
@@ -36,5 +32,4 @@ export {
     showEditWatchlistsActionCreator,
     showLoginTabActionCreator,
     toggleAccountDropdownActionCreator,
-    toggleWatchlistsActionCreator,
 };

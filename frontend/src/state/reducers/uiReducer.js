@@ -3,7 +3,6 @@ import {
     SHOW_EDIT_WATCHLISTS,
     SHOW_LOGIN_TAB,
     TOGGLE_ACCOUNT_DROPDOWN,
-    TOGGLE_WATCHLISTS,
 } from '../actions/actionTypes';
 
 
@@ -12,7 +11,6 @@ const INITIAL_STATE = {
     showingEditWatchlists: false,
     showingLoginTab: true,
     expandedAccountDropdown: false,
-    expandedWatchlists: false,
 };
 
 const uiReducer = (state = INITIAL_STATE, action) => {
@@ -25,8 +23,6 @@ const uiReducer = (state = INITIAL_STATE, action) => {
             return { ...state, showingLoginTab: action.clickedLoginTab };
         case TOGGLE_ACCOUNT_DROPDOWN:
             return { ...state, expandedAccountDropdown: !state.expandedAccountDropdown };
-        case TOGGLE_WATCHLISTS:
-            return { ...state, expandedWatchlists: !state.expandedWatchlists };
     }
 
     return state;
