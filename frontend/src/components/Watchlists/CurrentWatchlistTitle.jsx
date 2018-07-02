@@ -1,4 +1,6 @@
 import React from 'react';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 import { connect } from 'react-redux';
 
 import ToggleWatchlistArrowIcon from './ToggleWatchlistArrowIcon';
@@ -19,17 +21,20 @@ const divStyle = {
     width: '170px',
 };
 
+
+const GET_SELECTED_WATCHLIST_NAME = gql`{
+    selectedWatchlist @client {
+        name
+    }
+}`;
+
 const CurrentWatchlistTitle = props =>
     <div>
         <div onClick={props.toggleWatchlists} style={divStyle}>
-            {props.selectedWatchlist.name || 'all watchlists'}
+            {props.selectedWatchlistName || 'all watchlists'}
         </div>
         <ToggleWatchlistArrowIcon />
     </div>;
-
-const mapStateToProps = state => ({
-    selectedWatchlist: state.watchlists.selectedWatchlist,
-});
 
 const mapDispatchToProps = dispatch => ({
     toggleWatchlists: e => {
@@ -38,6 +43,18 @@ const mapDispatchToProps = dispatch => ({
     },
 })
 
-const ConnectedTitle = connect(mapStateToProps, mapDispatchToProps)(CurrentWatchlistTitle);
+const ConnectedTitle = connect(null, mapDispatchToProps)(CurrentWatchlistTitle);
 
-export default ConnectedTitle;
+
+const QueriedTitle = () =>
+    <Query query={GET_SELECTED_WATCHLIST_NAME}>
+        {({ data, error, loading }) => {
+            if (!error && !loading) {
+                return <ConnectedTitle selectedWatchlistName={data.selectedWatchlist.name} />;
+            }
+
+            return null;
+        }}
+    </Query>
+
+export default QueriedTitle;
