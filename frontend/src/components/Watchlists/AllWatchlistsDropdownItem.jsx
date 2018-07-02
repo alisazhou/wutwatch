@@ -31,7 +31,8 @@ class AllWatchlistsDropdownItem extends React.Component {
 
     render() {
         const finalStyle = _.clone(style);
-        if (_.isEqual(this.props.watchlist, this.props.selectedWatchlist)) {
+        if (this.props.watchlist.name === this.props.selectedWatchlistName ||
+            (_.isEmpty(this.props.watchlist) && !this.props.selectedWatchlistName)) {
             finalStyle.fontStyle = 'italic';
         }
         if (this.props.hovering) {
@@ -61,7 +62,7 @@ const ApolloItem = props =>
 
                 return (
                     <AllWatchlistsDropdownItem
-                        selectedWatchlist={data.selectedWatchlist}
+                        selectedWatchlistName={data.selectedWatchlist.name}
                         clickHandler={clickHandler}
                         {...props}
                     />
