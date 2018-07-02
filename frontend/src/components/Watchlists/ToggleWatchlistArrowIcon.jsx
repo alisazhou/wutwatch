@@ -40,7 +40,9 @@ const style = {
 
 
 const GET_CLIENT_CACHE = gql`{
-    uiExpandedWatchlists @client
+    uiState @client {
+        expandedWatchlists
+    }
 }`;
 
 const ToggleWatchlistArrowIcon = props =>
@@ -53,15 +55,18 @@ const QueriedArrowIcon = () =>
     <Query query={GET_CLIENT_CACHE}>
         {({ client, data, error, loading }) => {
             if (!error && !loading) {
+                const uiExpandedWatchlists = data.uiState.expandedWatchlists;
                 const clickHandler = () => {
                     client.writeData({
-                        data: { uiExpandedWatchlists: !data.uiExpandedWatchlists },
+                        data: {
+                            uiState: _.assign({}, data.uiState, { expandedWatchlists: !uiExpandedWatchlists }),
+                        },
                     });
                 };
 
                 return <ToggleWatchlistArrowIcon
                     clickHandler={clickHandler}
-                    uiExpandedWatchlists={data.uiExpandedWatchlists}
+                    uiExpandedWatchlists={uiExpandedWatchlists}
                 />;
             }
 

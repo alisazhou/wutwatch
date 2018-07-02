@@ -21,9 +21,12 @@ const client = new ApolloClient({
         defaults: {
             selectedWatchlist: {
                 name: null,
-                __typename: "WatchListType",
+                __typename: 'WatchListType',
             },
-            uiExpandedWatchlists: false,
+            uiState: {
+                expandedWatchlists: false,
+                __typename: 'uiState',
+            },
         },
     },
 });

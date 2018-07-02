@@ -20,7 +20,9 @@ const GET_SELECTED_WATCHLIST = gql`{
     selectedWatchlist @client {
         name
     }
-    uiExpandedWatchlists @client
+    uiState @client {
+        expandedWatchlists
+    }
 }`;
 
 
@@ -52,10 +54,11 @@ const ApolloItem = props =>
         {({ client, data, error, loading }) => {
             if (!error && !loading) {
                 const clickHandler = watchlist => {
+                    const uiExpandedWatchlists = data.uiState.expandedWatchlists;
                     client.writeData({
                         data: {
                             selectedWatchlist: watchlist,
-                            uiExpandedWatchlists: !data.uiExpandedWatchlists,
+                            uiState: _.assign({}, data.uiState, { expandedWatchlists: !uiExpandedWatchlists }),
                         },
                     });
                 };

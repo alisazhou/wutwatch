@@ -8,7 +8,9 @@ import WatchlistBar from './WatchlistBar';
 
 
 const GET_CLIENT_CACHE = gql`{
-    uiExpandedWatchlists @client
+    uiState @client {
+        expandedWatchlists
+    }
 }`;
 
 
@@ -23,7 +25,8 @@ const QueriedWatchlists = () =>
     <Query query={GET_CLIENT_CACHE}>
         {({ data, error, loading }) => {
             if (!error && !loading) {
-                return <Watchlists uiExpandedWatchlists={data.uiExpandedWatchlists} />;
+                const uiExpandedWatchlists = data.uiState.expandedWatchlists;
+                return <Watchlists uiExpandedWatchlists={uiExpandedWatchlists} />;
             }
 
             return null;
