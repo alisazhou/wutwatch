@@ -2,11 +2,9 @@ import React from 'react';
 import _ from 'lodash';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { connect } from 'react-redux';
 
 import AllWatchlistsDropdownItem from './AllWatchlistsDropdownItem';
 import { background800, backgroundNormal, typographyBody2 } from '../cssConstants';
-import { toggleWatchlistsActionCreator } from '../../state/actions/uiActions';
 
 
 const style = {
@@ -34,14 +32,6 @@ const LOAD_WATCHLISTS = gql`{
 }`;
 
 class AllWatchlistsDropdown extends React.Component {
-    componentDidMount() {
-        window.addEventListener('click', this.props.toggleWatchlists);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('click', this.props.toggleWatchlists);
-    }
-
     render() {
         return (
             <div style={style}>
@@ -57,20 +47,12 @@ class AllWatchlistsDropdown extends React.Component {
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    toggleWatchlists: () => {
-        dispatch(toggleWatchlistsActionCreator());
-    },
-});
-
-const ConnectedDropdown = connect(null, mapDispatchToProps)(AllWatchlistsDropdown);
-
 
 const QueriedDropdown = () =>
     <Query query={LOAD_WATCHLISTS}>
         {({ data, error, loading }) => {
             if (!error && !loading) {
-                return <ConnectedDropdown watchlists={data.allWatchlists} />
+                return <AllWatchlistsDropdown watchlists={data.allWatchlists} />;
             }
             return null;
         }}

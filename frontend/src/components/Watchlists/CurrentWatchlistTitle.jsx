@@ -40,9 +40,7 @@ const QueriedTitle = () =>
     <Query query={GET_CLIENT_CACHE}>
         {({ client, data, error, loading }) => {
             if (!error && !loading) {
-                const toggleWatchlists = e => {
-                    // AllWatchListDropdown adds window onClick listener onMount
-                    e.stopPropagation();
+                const toggleWatchlists = () => {
                     client.writeData({
                         data: { uiExpandedWatchlists: !data.uiExpandedWatchlists }
                     });
