@@ -1,22 +1,34 @@
 import React from 'react';
 import _ from 'lodash';
-import { connect } from 'react-redux';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 
 import AllWatchlistsDropdown from './AllWatchlistsDropdown';
 import WatchlistBar from './WatchlistBar';
 
 
+const GET_CLIENT_CACHE = gql`{
+    uiExpandedWatchlists @client
+}`;
+
+
 const Watchlists = props =>
     <div>
         {_.isEmpty(props.searchedMovie) && <WatchlistBar />}
-        {props.expandedWatchlists && <AllWatchlistsDropdown />}
+        {props.uiExpandedWatchlists && <AllWatchlistsDropdown />}
     </div>;
 
-const mapStateToProps = state => ({
-    expandedWatchlists: state.ui.expandedWatchlists,
-    searchedMovie: state.movies.searchedMovie,
-});
 
-const ConnectedWatchlists = connect(mapStateToProps)(Watchlists);
+const QueriedWatchlists = () =>
+    <Query query={GET_CLIENT_CACHE}>
+        {({ data, error, loading }) => {
+            if (!error && !loading) {
+                return <Watchlists uiExpandedWatchlists={data.uiExpandedWatchlists} />;
+            }
 
-export default ConnectedWatchlists;
+            return null;
+        }}
+    </Query>;
+
+
+export default QueriedWatchlists;

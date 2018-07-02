@@ -23,6 +23,7 @@ const client = new ApolloClient({
                 name: null,
                 __typename: "WatchListType",
             },
+            uiExpandedWatchlists: false,
         },
     },
 });

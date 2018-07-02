@@ -1,11 +1,9 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { connect } from 'react-redux';
 
 import ToggleWatchlistArrowIcon from './ToggleWatchlistArrowIcon';
 import { background800, backgroundTitle, typographyBody2 } from '../cssConstants';
-import { toggleWatchlistsActionCreator } from '../../state/actions/uiActions';
 
 
 const divStyle = {
@@ -22,10 +20,11 @@ const divStyle = {
 };
 
 
-const GET_SELECTED_WATCHLIST_NAME = gql`{
+const GET_CLIENT_CACHE = gql`{
     selectedWatchlist @client {
         name
     }
+    uiExpandedWatchlists @client
 }`;
 
 const CurrentWatchlistTitle = props =>
@@ -36,21 +35,23 @@ const CurrentWatchlistTitle = props =>
         <ToggleWatchlistArrowIcon />
     </div>;
 
-const mapDispatchToProps = dispatch => ({
-    toggleWatchlists: e => {
-        e.stopPropagation(); // AllWatchListDropdown adds a window onClick listener on mount
-        dispatch(toggleWatchlistsActionCreator());
-    },
-})
-
-const ConnectedTitle = connect(null, mapDispatchToProps)(CurrentWatchlistTitle);
-
 
 const QueriedTitle = () =>
-    <Query query={GET_SELECTED_WATCHLIST_NAME}>
-        {({ data, error, loading }) => {
+    <Query query={GET_CLIENT_CACHE}>
+        {({ client, data, error, loading }) => {
             if (!error && !loading) {
-                return <ConnectedTitle selectedWatchlistName={data.selectedWatchlist.name} />;
+                const toggleWatchlists = e => {
+                    // AllWatchListDropdown adds window onClick listener onMount
+                    e.stopPropagation();
+                    client.writeData({
+                        data: { uiExpandedWatchlists: !data.uiExpandedWatchlists }
+                    });
+                };
+
+                return <CurrentWatchlistTitle
+                    selectedWatchlistName={data.selectedWatchlist.name}
+                    toggleWatchlists={toggleWatchlists}
+                />;
             }
 
             return null;
