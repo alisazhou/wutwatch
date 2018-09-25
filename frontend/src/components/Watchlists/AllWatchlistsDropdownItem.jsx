@@ -1,20 +1,40 @@
 import React from 'react';
 import _ from 'lodash';
-import { connect } from 'react-redux';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 
 import { background600 } from '../cssConstants';
 import withHover from '../withHover';
-import { selectWatchlistActionCreator } from '../../state/actions/watchlistActions';
-import { toggleWatchlistsActionCreator } from '../../state/actions/uiActions';
 
 
-// TODO: make this a function
+const style = {
+    height: '20px',
+    overflowX: 'hidden',
+    padding: '4px 0px 0px 10px',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+};
+
+
+const GET_SELECTED_WATCHLIST = gql`{
+    selectedWatchlist @client {
+        name
+    }
+    uiState @client {
+        expandedWatchlists
+    }
+}`;
+
+
 class AllWatchlistsDropdownItem extends React.Component {
-    render() {
-        const { watchlist } = this.props;
+    onClick = () => {
+        this.props.clickHandler(this.props.watchlist);
+    }
 
-        const finalStyle = _.clone(this.props.style);
-        if (_.isEqual(watchlist, this.props.selectedWatchlist)) {
+    render() {
+        const finalStyle = _.clone(style);
+        if (this.props.watchlist.name === this.props.selectedWatchlistName ||
+            (_.isEmpty(this.props.watchlist) && !this.props.selectedWatchlistName)) {
             finalStyle.fontStyle = 'italic';
         }
         if (this.props.hovering) {
@@ -22,31 +42,38 @@ class AllWatchlistsDropdownItem extends React.Component {
         }
 
         return (
-            <div
-                onClick={() => this.props.selectWatchlist(watchlist)}
-                style={finalStyle}
-            >
-                {watchlist.name || 'all watchlists'}
+            <div onClick={this.onClick} style={finalStyle}>
+                {this.props.watchlist.name || 'all watchlists'}
             </div>
         );
     }
 }
 
-const mapStateToProps = state => ({
-    selectedWatchlist: state.watchlists.selectedWatchlist,
-});
+const ApolloItem = props =>
+    <Query query={GET_SELECTED_WATCHLIST}>
+        {({ client, data, error, loading }) => {
+            if (!error && !loading) {
+                const clickHandler = watchlist => {
+                    const uiExpandedWatchlists = data.uiState.expandedWatchlists;
+                    client.writeData({
+                        data: {
+                            selectedWatchlist: watchlist,
+                            uiState: _.assign({}, data.uiState, { expandedWatchlists: !uiExpandedWatchlists }),
+                        },
+                    });
+                };
 
-const mapDispatchToProps = dispatch => ({
-    selectWatchlist: watchlistId => {
-        dispatch(selectWatchlistActionCreator(watchlistId));
-    },
-    toggleWatchlists: () => {
-        dispatch(toggleWatchlistsActionCreator());
-    },
-});
+                return (
+                    <AllWatchlistsDropdownItem
+                        selectedWatchlistName={data.selectedWatchlist.name}
+                        clickHandler={clickHandler}
+                        {...props}
+                    />
+                );
+            }
 
-const ConnectedItem = connect(mapStateToProps, mapDispatchToProps)(AllWatchlistsDropdownItem);
+            return null;
+        }}
+    </Query>
 
-const WrappedItem = withHover(ConnectedItem);
-
-export default WrappedItem;
+export default withHover(ApolloItem);

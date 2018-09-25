@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 
 import IconWrapper from '../IconWrapper';
 import { backgroundNormal } from '../cssConstants';
-import { toggleWatchlistsActionCreator } from '../../state/actions/uiActions';
 
 
 const RightArrowSVG = () =>
@@ -38,22 +38,41 @@ const style = {
     left: '200px',
 };
 
+
+const GET_CLIENT_CACHE = gql`{
+    uiState @client {
+        expandedWatchlists
+    }
+}`;
+
 const ToggleWatchlistArrowIcon = props =>
-    <div onClick={props.toggleWatchlists} style={style}>
-        {props.expandedWatchlists ? <DownArrowIcon /> : <RightArrowIcon />}
+    <div onClick={props.clickHandler} style={style}>
+        {props.uiExpandedWatchlists ? <DownArrowIcon /> : <RightArrowIcon />}
     </div>;
 
-const mapStateToProps = state => ({
-    expandedWatchlists: state.ui.expandedWatchlists,
-});
 
-const mapDispatchToProps = dispatch => ({
-    toggleWatchlists: e => {
-        e.stopPropagation(); // AllWatchListDropdown adds a window onClick listener on mount
-        dispatch(toggleWatchlistsActionCreator());
-    },
-});
+const QueriedArrowIcon = () =>
+    <Query query={GET_CLIENT_CACHE}>
+        {({ client, data, error, loading }) => {
+            if (!error && !loading) {
+                const uiExpandedWatchlists = data.uiState.expandedWatchlists;
+                const clickHandler = () => {
+                    client.writeData({
+                        data: {
+                            uiState: _.assign({}, data.uiState, { expandedWatchlists: !uiExpandedWatchlists }),
+                        },
+                    });
+                };
 
-const ConnectedArrowIcon = connect(mapStateToProps, mapDispatchToProps)(ToggleWatchlistArrowIcon);
+                return <ToggleWatchlistArrowIcon
+                    clickHandler={clickHandler}
+                    uiExpandedWatchlists={uiExpandedWatchlists}
+                />;
+            }
 
-export default ConnectedArrowIcon;
+            return null;
+        }}
+    </Query>;
+
+
+export default QueriedArrowIcon;

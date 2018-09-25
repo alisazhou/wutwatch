@@ -1,9 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+import _ from 'lodash';
 
 import ToggleWatchlistArrowIcon from './ToggleWatchlistArrowIcon';
 import { background800, backgroundTitle, typographyBody2 } from '../cssConstants';
-import { toggleWatchlistsActionCreator } from '../../state/actions/uiActions';
 
 
 const divStyle = {
@@ -19,25 +20,46 @@ const divStyle = {
     width: '170px',
 };
 
+
+const GET_CLIENT_CACHE = gql`{
+    selectedWatchlist @client {
+        name
+    }
+    uiState @client {
+        expandedWatchlists
+    }
+}`;
+
 const CurrentWatchlistTitle = props =>
     <div>
         <div onClick={props.toggleWatchlists} style={divStyle}>
-            {props.selectedWatchlist.name || 'all watchlists'}
+            {props.selectedWatchlistName || 'all watchlists'}
         </div>
         <ToggleWatchlistArrowIcon />
     </div>;
 
-const mapStateToProps = state => ({
-    selectedWatchlist: state.watchlists.selectedWatchlist,
-});
 
-const mapDispatchToProps = dispatch => ({
-    toggleWatchlists: e => {
-        e.stopPropagation(); // AllWatchListDropdown adds a window onClick listener on mount
-        dispatch(toggleWatchlistsActionCreator());
-    },
-})
+const QueriedTitle = () =>
+    <Query query={GET_CLIENT_CACHE}>
+        {({ client, data, error, loading }) => {
+            if (!error && !loading) {
+                const uiExpandedWatchlists = data.uiState.expandedWatchlist;
+                const toggleWatchlists = () => {
+                    client.writeData({
+                        data: {
+                            uiState: _.assign({}, data.uiState, { expandedWatchlists: !uiExpandedWatchlists }),
+                        },
+                    });
+                };
 
-const ConnectedTitle = connect(mapStateToProps, mapDispatchToProps)(CurrentWatchlistTitle);
+                return <CurrentWatchlistTitle
+                    selectedWatchlistName={data.selectedWatchlist.name}
+                    toggleWatchlists={toggleWatchlists}
+                />;
+            }
 
-export default ConnectedTitle;
+            return null;
+        }}
+    </Query>
+
+export default QueriedTitle;

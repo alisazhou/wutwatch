@@ -2,11 +2,9 @@ import React from 'react';
 import _ from 'lodash';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { connect } from 'react-redux';
 
 import AllWatchlistsDropdownItem from './AllWatchlistsDropdownItem';
 import { background800, backgroundNormal, typographyBody2 } from '../cssConstants';
-import { toggleWatchlistsActionCreator } from '../../state/actions/uiActions';
 
 
 const style = {
@@ -19,14 +17,6 @@ const style = {
     top: '63px',
     width: '180px',
     zIndex: 2,
-};
-
-const divStyle = {
-    height: '20px',
-    overflowX: 'hidden',
-    padding: '4px 0px 0px 10px',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
 };
 
 
@@ -42,23 +32,14 @@ const LOAD_WATCHLISTS = gql`{
 }`;
 
 class AllWatchlistsDropdown extends React.Component {
-    componentDidMount() {
-        window.addEventListener('click', this.props.toggleWatchlists);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('click', this.props.toggleWatchlists);
-    }
-
     render() {
         return (
             <div style={style}>
-                <AllWatchlistsDropdownItem watchlist={{}} style={divStyle} />
+                <AllWatchlistsDropdownItem watchlist={{}} />
                 {_.map(this.props.watchlists.edges, watchlist =>
                     <AllWatchlistsDropdownItem
                         key={watchlist.node.id}
                         watchlist={watchlist.node}
-                        style={divStyle}
                     />
                 )}
             </div>
@@ -66,20 +47,12 @@ class AllWatchlistsDropdown extends React.Component {
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    toggleWatchlists: () => {
-        dispatch(toggleWatchlistsActionCreator());
-    },
-});
-
-const ConnectedDropdown = connect(null, mapDispatchToProps)(AllWatchlistsDropdown);
-
 
 const QueriedDropdown = () =>
     <Query query={LOAD_WATCHLISTS}>
         {({ data, error, loading }) => {
             if (!error && !loading) {
-                return <ConnectedDropdown watchlists={data.allWatchlists} />
+                return <AllWatchlistsDropdown watchlists={data.allWatchlists} />;
             }
             return null;
         }}
