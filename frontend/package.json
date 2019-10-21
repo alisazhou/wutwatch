@@ -9,7 +9,7 @@
     "classnames": "^2.2.5",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "moment": "^2.20.1",
     "react": "^15.4.2",
     "react-apollo": "^2.1.5",
